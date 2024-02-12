@@ -2,10 +2,12 @@
 using DogWalker2.Application.Customers.Commands.CreateCommands;
 using DogWalker2.Application.Customers.Commands.DeleteCommands;
 using DogWalker2.Application.Customers.Commands.UpdateCommands;
+using DogWalker2.Application.Customers.Queries.GetAllCustomers;
 using DogWalker2.Application.Customers.DTOs;
 using DogWalker2.Domain.Customers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,9 +30,19 @@ namespace DogWalker2.Api.Customers
 
         // GET: api/<CustomerController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var query = new GetCustomerQuery();
+            try
+            {
+                var customers = await _mediator.Send(query);
+                return Ok(customers);
+            }
+            catch
+            {
+                return NotFound();
+            }
+            
         }
 
         // GET api/<CustomerController>/5

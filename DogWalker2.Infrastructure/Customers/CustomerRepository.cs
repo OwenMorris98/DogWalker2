@@ -32,6 +32,12 @@ namespace DogWalker2.Infrastructure.Customers
             _context.Customers.Remove(customer);
         }
 
+        public async Task<ICollection<Customer>> GetAll()
+        {
+            return await _context.Customers.ToListAsync(); 
+
+        }
+
         public async Task<Customer> GetCustomerById(string id)
         {
             try

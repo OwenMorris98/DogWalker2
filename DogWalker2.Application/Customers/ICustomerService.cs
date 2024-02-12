@@ -18,5 +18,7 @@ namespace DogWalker2.Application.Customers
 
         Task deleteCustomer(string id);
    
+
+
     }
 }

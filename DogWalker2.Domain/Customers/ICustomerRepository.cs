@@ -18,5 +18,7 @@ namespace DogWalker2.Domain.Customers
         void UpdateCustomer(Customer customer);
 
         void deleteCustomer(Customer customer);
+
+        Task<ICollection<Customer>> GetAll();   
     }
 }
