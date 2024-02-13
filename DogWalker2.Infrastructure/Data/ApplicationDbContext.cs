@@ -28,5 +28,31 @@ namespace DogWalker2.Infrastructure.Data
         {
         }
 
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Customer>().HasData(
+        //        new Customer
+        //        {
+        //            Id = Guid.NewGuid().ToString(),
+        //            first_name = "Owen",
+        //            last_name = "Morris",
+        //            address = "145 Jamestown Ave",
+        //            city = "Kennet Square",
+        //            state = "PA",
+        //            zipcode = "19348"
+        //        },
+        //        new Customer
+        //        {
+        //            Id = Guid.NewGuid().ToString(),
+        //            first_name = "Riley",
+        //            last_name = "Zarko",
+        //            address = "9 E New Jersey Ave",
+        //            city = "Beach Haven",
+        //            state = "NJ",
+        //            zipcode = "15051"
+        //        }
+        //    );
+        //}
+
     }
 }

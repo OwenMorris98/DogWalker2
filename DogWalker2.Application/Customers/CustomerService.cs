@@ -23,10 +23,19 @@ namespace DogWalker2.Application.Customers
             this._customerRepository.addCustomer(cust);
         }
 
-        public async Task addCustomerData( Customer cust)
+        public void addCustomerData(AddCustomerDTO dto)
         {
-
-            this._customerRepository.addCustomerData(cust);
+            Customer customer = new Customer()
+            {
+                Id = dto.Id,
+                first_name = dto.first_name,
+                last_name = dto.last_name,
+                address = dto.address,
+                city = dto.city,
+                state = dto.state, 
+                zipcode = dto.zipcode,
+            };
+            this._customerRepository.addCustomerData(customer);
             
         }
 

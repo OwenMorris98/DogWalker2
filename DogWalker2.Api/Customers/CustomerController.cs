@@ -1,4 +1,4 @@
-﻿using DogWalker2.Api.Customers.DTOs;
+﻿using DogWalker2.Application.Customers.DTOs;
 using DogWalker2.Application.Customers.Commands.CreateCommands;
 using DogWalker2.Application.Customers.Commands.DeleteCommands;
 using DogWalker2.Application.Customers.Commands.UpdateCommands;
@@ -8,6 +8,7 @@ using DogWalker2.Domain.Customers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using DogWalker2.Application.Customers.Queries.GetById;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -47,20 +48,32 @@ namespace DogWalker2.Api.Customers
 
         // GET api/<CustomerController>/5
         [HttpGet("{id}")]
-        public string Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            return "value";
+            var query = new GetCustomerByIdQuery(id);
+
+            try
+            {
+                var customer = await _mediator.Send(query);
+                return Ok(customer);
+            }
+            catch
+            {
+                return NotFound();
+            }
+        
         }
 
         // POST api/<CustomerController>
         [HttpPost]
         [Route("/AddCustomer")]
-        public async Task Post([FromBody] AddCustomerDTO customer)
+        public async Task<IActionResult> Post([FromBody] CreateCustomerCommand command)
         {
-            var request = new CreateCustomerCommand(customer);
+            // var request = new CreateCustomerCommand(customer);
             try
             {
-                await _mediator.Send(request);
+                var response = await _mediator.Send(command);
+                return Ok(response);
             }
             catch
             {

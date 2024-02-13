@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DogWalker2.Api.Customers;
-using DogWalker2.Api.Customers.DTOs;
+using DogWalker2.Application.Customers.DTOs;
 using DogWalker2.Application.Customers;
 using System.Drawing.Printing;
 using MediatR;
@@ -36,22 +36,22 @@ namespace DogWalker2.Api.Dogs
             return "value";
         }
 
-        // POST api/<DogController>
-        [HttpPost]
-        public async void Post([FromBody] AddCustomerDTO customer)
-        {
-            var request = new CreateCustomerCommand(customer);
-            try
-            {
-                await _mediator.Send(request);
-            }
-            catch
-            {
-                throw new NotImplementedException();
-            }
+        //// POST api/<DogController>
+        //[HttpPost]
+        //public async void Post([FromBody] AddCustomerDTO customer)
+        //{
+        //    var request = new CreateCustomerCommand(customer);
+        //    try
+        //    {
+        //        await _mediator.Send(request);
+        //    }
+        //    catch
+        //    {
+        //        throw new NotImplementedException();
+        //    }
 
 
-        }
+        //}
 
         // PUT api/<DogController>/5
         [HttpPut("{id}")]

@@ -1,4 +1,4 @@
-﻿using DogWalker2.Api.Customers.DTOs;
+﻿using DogWalker2.Application.Customers.DTOs;
 using DogWalker2.Application.Customers.DTOs;
 using MediatR;
 using System;

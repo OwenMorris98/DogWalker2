@@ -12,7 +12,7 @@ namespace DogWalker2.Application.Customers
     {
         void addCustomer(string id);
 
-        Task addCustomerData(Customer customer);
+        void addCustomerData(AddCustomerDTO customer);
 
         void UpdateCustomer(Customer customer);
 

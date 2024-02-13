@@ -5,24 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DogWalker2.Domain.Customers;
-using DogWalker2.Api.Customers.DTOs;
+using DogWalker2.Application.Customers.DTOs;
 namespace DogWalker2.Application.Customers.Commands.CreateCommands
 {
-    public class CreateCustomerCommand : IRequest
+    public class CreateCustomerCommand : IRequest<AddCustomerDTO>
     {
 
-        public string id { get; set; }
+        public string id { get; } = Guid.NewGuid().ToString();  
         public string first_name { get; set; }
 
         public string last_name { get; set; }
-        public CreateCustomerCommand(AddCustomerDTO cust)
-        {
-            id = Guid.NewGuid().ToString();
-            first_name = cust.first_name;
-            last_name = cust.last_name;
 
-        }
+        public string? address { get; set; }
 
+        public string? city { get; set; }
+
+        public string? state { get; set; }
+
+        public string? zipcode { get; set; }
 
     }
 }
