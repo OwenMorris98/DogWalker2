@@ -12,10 +12,10 @@ namespace DogWalker2.Application.Customers.Queries.GetAllCustomers
 {
     public class GetAllCustomersHandler : IRequestHandler<GetCustomerQuery, GetAllCustomersDTO>
     {
-        private readonly ICustomerRepository _customerRepo;
+        private readonly ICustomerService _customerRepo;
         private readonly IUnitOfWork _unitOfWork;
 
-        public GetAllCustomersHandler(ICustomerRepository customerService, IUnitOfWork unitOfWork)
+        public GetAllCustomersHandler(ICustomerService customerService, IUnitOfWork unitOfWork)
         {
             _customerRepo = customerService;
             _unitOfWork = unitOfWork;
@@ -23,13 +23,9 @@ namespace DogWalker2.Application.Customers.Queries.GetAllCustomers
 
         public async Task<GetAllCustomersDTO> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
-            var customers = await _customerRepo.GetAll();
+            return await _customerRepo.GetAll();
 
-            GetAllCustomersDTO cust = new GetAllCustomersDTO()
-            {
-                customers = customers
-            };
-            return cust;
+            
         }
     }
 }

@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DogWalker2.Application.Customers.DTOs;
+using DogWalker2.Application.Customers.Queries.GetById;
+using DogWalker2.Application.Customers.Commands.CreateCommands;
 using DogWalker2.Domain.Customers;
+using DogWalker2.Application.Customers.Commands.UpdateCommands;
 
 namespace DogWalker2.Application.Customers
 {
@@ -12,12 +15,15 @@ namespace DogWalker2.Application.Customers
     {
         void addCustomer(string id);
 
-        void addCustomerData(AddCustomerDTO customer);
+        Task<CustomerDTO> addCustomerData(CreateCustomerCommand command);
 
-        void UpdateCustomer(Customer customer);
+        Task<CustomerDTO> UpdateCustomer(UpdateCustomerCommand command);
 
         Task deleteCustomer(string id);
-   
+    
+        Task<GetAllCustomersDTO> GetAll();
+
+        Task<CustomerDTO> GetCustomerById(string id);
 
 
     }

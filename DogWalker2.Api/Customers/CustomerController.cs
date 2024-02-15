@@ -3,7 +3,6 @@ using DogWalker2.Application.Customers.Commands.CreateCommands;
 using DogWalker2.Application.Customers.Commands.DeleteCommands;
 using DogWalker2.Application.Customers.Commands.UpdateCommands;
 using DogWalker2.Application.Customers.Queries.GetAllCustomers;
-using DogWalker2.Application.Customers.DTOs;
 using DogWalker2.Domain.Customers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -66,12 +65,12 @@ namespace DogWalker2.Api.Customers
 
         // POST api/<CustomerController>
         [HttpPost]
-        [Route("/AddCustomer")]
-        public async Task<IActionResult> Post([FromBody] CreateCustomerCommand command)
+        public async Task<IActionResult> Post([FromBody] CustomerDTO customer)
         {
             // var request = new CreateCustomerCommand(customer);
             try
             {
+                var command = new CreateCustomerCommand(customer);
                 var response = await _mediator.Send(command);
                 return Ok(response);
             }
@@ -83,12 +82,13 @@ namespace DogWalker2.Api.Customers
 
         // PUT api/<CustomerController>/5
         [HttpPut("{id}")]
-        public async Task Put(string id, [FromBody] UpdateCustomerDTO customer)
+        public async Task<IActionResult> Put(string id, [FromBody] CustomerDTO customer)
         {
             var request = new UpdateCustomerCommand(id, customer);
             try
             {
-                await _mediator.Send(request);
+                var response = await _mediator.Send(request);
+                return Ok(response);
             }
             catch
             {

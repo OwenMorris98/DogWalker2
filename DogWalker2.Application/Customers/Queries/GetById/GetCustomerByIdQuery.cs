@@ -8,13 +8,8 @@ using System.Threading.Tasks;
 
 namespace DogWalker2.Application.Customers.Queries.GetById
 {
-    public class GetCustomerByIdQuery : IRequest<CustomerDTO>
-    {
-        public string Id { get; set; }
 
-        public GetCustomerByIdQuery(string id)
-        {
-            this.Id = id;
-        }
-    }
+    public record GetCustomerByIdQuery(string id) : IRequest<CustomerDTO>;
+ 
+    
 }

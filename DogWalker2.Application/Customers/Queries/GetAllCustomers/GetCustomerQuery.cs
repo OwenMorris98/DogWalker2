@@ -9,12 +9,8 @@ using System.Threading.Tasks;
 
 namespace DogWalker2.Application.Customers.Queries.GetAllCustomers
 {
-    public class GetCustomerQuery  : IRequest<GetAllCustomersDTO>
+    public record GetCustomerQuery  : IRequest<GetAllCustomersDTO>
     {
-        public GetCustomerQuery()
-        {
-            
-        }
 
     }
 }

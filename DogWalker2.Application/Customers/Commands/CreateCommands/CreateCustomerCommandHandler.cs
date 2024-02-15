@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DogWalker2.Application.Customers.Commands.CreateCommands
 {
-    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, AddCustomerDTO>
+    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CustomerDTO>
     {
         private readonly ICustomerService _customerService;
         private readonly IUnitOfWork _unitOfWork;
@@ -22,23 +22,10 @@ namespace DogWalker2.Application.Customers.Commands.CreateCommands
             _unitOfWork = unitOfWork;
         }
 
-        async Task<AddCustomerDTO> IRequestHandler<CreateCustomerCommand, AddCustomerDTO>.Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+        async Task<CustomerDTO> IRequestHandler<CreateCustomerCommand, CustomerDTO>.Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
-            
-
-            AddCustomerDTO customerToAdd = new AddCustomerDTO()
-            {
-                Id = request.id,
-                first_name = request.first_name,
-                last_name = request.last_name,
-                address = request.address,
-                city = request.city,
-                state = request.state,
-                zipcode = request.zipcode
-            };
-            _customerService.addCustomerData(customerToAdd);
-            _unitOfWork.Save();
-
+            var customerToAdd = await _customerService.addCustomerData(request);
+            await _unitOfWork.SaveAsync();
             return customerToAdd;
         }
     }

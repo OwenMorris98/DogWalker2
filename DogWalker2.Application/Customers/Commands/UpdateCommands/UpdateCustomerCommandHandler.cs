@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DogWalker2.Application.Customers.DTOs;
 
 namespace DogWalker2.Application.Customers.Commands.UpdateCommands
 {
-    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand>
+    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, CustomerDTO>
     {
         private readonly ICustomerService _customerService;
 
@@ -21,22 +22,26 @@ namespace DogWalker2.Application.Customers.Commands.UpdateCommands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<CustomerDTO> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            Customer cust = new Customer()
-            {
-                Id = request.id,
-                first_name = request.first_name,
-                last_name = request.last_name,
-                address = request.address,
-                city    = request.city,
-                state = request.state,
-                zipcode = request.zipcode,
+           var response = await _customerService.UpdateCustomer(request);
+            await _unitOfWork.SaveAsync();
 
-            };
-            _customerService.UpdateCustomer(cust);
-            _unitOfWork.Save();
-            
+            //CustomerDTO response = new CustomerDTO()
+            //{
+            //    first_name = request.customerToUpdate.first_name,
+            //    last_name = request.customerToUpdate.last_name,
+            //    address = request.customerToUpdate.address,
+            //    city = request.customerToUpdate.city,
+            //    state = request.customerToUpdate.state,
+            //    zipcode = request.customerToUpdate.zipcode
+            //};
+
+            return response;
         }
+
+        
+
+     
     }
 }

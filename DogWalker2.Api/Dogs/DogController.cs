@@ -5,11 +5,12 @@ using DogWalker2.Application.Customers;
 using System.Drawing.Printing;
 using MediatR;
 using DogWalker2.Application.Customers.Commands.CreateCommands;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace DogWalker2.Api.Dogs
 {
-    [Route("api/[controller]")]
+    [Route("api/{CustomerId}/[controller]")]
     [ApiController]
     public class DogController : ControllerBase
     {
@@ -24,14 +25,15 @@ namespace DogWalker2.Api.Dogs
 
         // GET: api/<DogController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> Get(string CustomerId)
         {
+            
             return new string[] { "value1", "value2" };
         }
 
         // GET api/<DogController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(string customerId, string id)
         {
             return "value";
         }

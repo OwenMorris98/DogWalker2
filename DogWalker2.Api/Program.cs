@@ -38,6 +38,18 @@ builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 
+builder.Services.AddCors(options =>
+ {
+     options.AddPolicy("CorsPolicy",
+                        policy =>
+                        {
+                            policy.WithOrigins("http://localhost:5173") // Add your client's origin(s)
+                                  .AllowAnyHeader()
+                                  .AllowAnyMethod()
+                                  .AllowCredentials(); // Allow credentials (e.g., cookies, authentication headers)
+                        });
+ });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,6 +58,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 

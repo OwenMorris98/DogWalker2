@@ -12,31 +12,16 @@ namespace DogWalker2.Application.Customers.Queries.GetById
 {
     public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery, CustomerDTO>
     {
-        private readonly ICustomerRepository _customerRepo;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ICustomerService _customerRepo;
 
-        public GetCustomerByIdQueryHandler(ICustomerRepository customerRepo, IUnitOfWork unitOfWork)
+        public GetCustomerByIdQueryHandler(ICustomerService customerRepo)
         {
-            _customerRepo = customerRepo;
-            _unitOfWork = unitOfWork;
+            _customerRepo = customerRepo;        
         }
 
         public async Task<CustomerDTO> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
         {
-           var customerSearch = await _customerRepo.GetCustomerById(request.Id);
-
-            CustomerDTO customer = new CustomerDTO()
-            {
-                Id = customerSearch.Id,
-                first_name = customerSearch.first_name,
-                last_name = customerSearch.last_name,
-                address = customerSearch.address,
-                city = customerSearch.city,
-                state = customerSearch.state,
-                zipcode = customerSearch.zipcode,
-            };
-
-            return customer;
+           return await _customerRepo.GetCustomerById(request.id);
         }
     }
 }
