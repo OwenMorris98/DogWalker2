@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   element: <Register />
   },
   {
-  path: '/Details/:customerid',
+  path: '/Details/:customerId',
   element: <Details />
   }
 ]);

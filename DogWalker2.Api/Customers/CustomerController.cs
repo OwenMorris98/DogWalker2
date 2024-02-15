@@ -53,7 +53,7 @@ namespace DogWalker2.Api.Customers
 
             try
             {
-                var customer = await _mediator.Send(query);
+                 var customer = await _mediator.Send(query);
                 return Ok(customer);
             }
             catch
