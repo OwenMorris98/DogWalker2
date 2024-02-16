@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useGetCustomerById } from './hooks/useGetCustomerById';
 import { useEffect, useState } from 'react';
 import  Customer  from './interfaces/Customer'
+import { usePutCustomer } from './hooks/usePutCustomer';
 //import { Link } from "react-router-dom"
 function Details() {
 const {customerId} = useParams<{customerId: string }>();
@@ -11,6 +12,15 @@ const {customerId} = useParams<{customerId: string }>();
 const {getCustomerById} = useGetCustomerById(customerId as string);
 const [customer, setCustomer] = useState<Customer | null>(null);
 const [editMode, setEditMode] = useState(false);
+const {putCustomer} = usePutCustomer(customerId as string, customer)
+
+const handleSave = async () => {
+  console.log(`Save button pressed! ${customer?.first_name}`, `${customer?.last_name}` );
+  const putResponse = await putCustomer();
+  console.log(putResponse);
+
+  toggleEditMode();
+}
 
 const getCustomer = async () => {
     try {
@@ -18,6 +28,7 @@ const getCustomer = async () => {
         console.log(response)
         setCustomer(response);
     } catch (error) {
+
         console.error('Error fetching customer data:', error);
     }
 };
@@ -32,15 +43,15 @@ const toggleEditMode = () => {
     setEditMode((prevEditMode) => !prevEditMode);
   };
 
+  const saveButtonOnClick = editMode ? handleSave : toggleEditMode;
+
 useEffect(() => {
     if (customerId) {
         getCustomer();
     }
 }, [customerId]);
 
-const showCustomer = () => {
-    console.log(customer);
-  };
+
     return (
         <div>
             {/* <h1>Details Page {params.customerid}</h1> */}
@@ -110,17 +121,11 @@ const showCustomer = () => {
               </thead>
             </table>
           )}
-          <button onClick={toggleEditMode}>{editMode ? 'Save' : 'Edit'}</button>
+          <button onClick={saveButtonOnClick}>{editMode ? 'Save' : 'Edit'}</button>
           
         </>
       )}
-    </>
-            {/* <h2>{customer?.first_name}</h2>
-            <h2>{customer?.last_name}</h2>
-            <h2>{customer?.address}</h2>
-            <h2>{customer?.city}</h2>
-            <h2>{customer?.state}</h2>
-            <h2>{customer?.zipcode}</h2> */}
+    </>            
         </div>
     )
 }
