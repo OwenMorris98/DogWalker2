@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using DogWalker2.Application.Dogs.CreateCommands;
+using DogWalker2.Application.Dogs.DTOs;
+using DogWalker2.Application.Mapperly;
 using DogWalker2.Domain.Dogs;
 
 namespace DogWalker2.Application.Dogs
@@ -11,14 +15,25 @@ namespace DogWalker2.Application.Dogs
     {
 
         private readonly IDogRepository _dogRepository;
-        public DogService(IDogRepository dogRepository) 
-        { 
+
+        private readonly DogMapper _mapper;
+        public DogService(IDogRepository dogRepository)
+        {
             _dogRepository = dogRepository;
+            _mapper = new DogMapper();
         }
 
-        public Task<bool> AddDogAsync(Dog dog)
+        public async Task<DogDTO> AddDogAsync(CreateDogCommand command)
         {
-            return this._dogRepository.AddDogAsync(dog);
+            var dogToAdd = _mapper.DogDTOtoDog(command.dog);
+            dogToAdd.Id = Guid.NewGuid().ToString();
+            var response = await this._dogRepository.AddDogAsync(dogToAdd);
+
+            if(response)
+            {
+                return command.dog;
+            }
+            return new DogDTO();
         }
 
         public bool AddDog(Dog dog)

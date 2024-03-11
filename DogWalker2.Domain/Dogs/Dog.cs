@@ -11,8 +11,8 @@ namespace DogWalker2.Domain.Dogs
 {
     public class Dog
     {
-        
-        public string Id { get; set; }
+        [Key]
+        public string Id { get; set; } 
 
         public string Name { get; set; }
 

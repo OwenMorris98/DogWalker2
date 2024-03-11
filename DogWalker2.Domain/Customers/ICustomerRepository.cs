@@ -10,7 +10,7 @@ namespace DogWalker2.Domain.Customers
     public interface ICustomerRepository
     {
 
-        Task<Customer> GetCustomerById(string id);
+        Task<Customer?> GetCustomerById(string id);
         void addCustomer(Customer customer);
 
         void addCustomerData(Customer customer);
@@ -19,6 +19,8 @@ namespace DogWalker2.Domain.Customers
 
         void deleteCustomer(Customer customer);
 
-        Task<ICollection<Customer>> GetAll();   
+        Task<ICollection<Customer>> GetAll();
+
+        Task<Customer> GetAllCustomerDataById(string id);
     }
 }

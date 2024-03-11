@@ -9,6 +9,6 @@ namespace DogWalker2.Application.Customers.DTOs
 {
     public class GetAllCustomersDTO
     {
-        public ICollection<Customer> customers {get; set;}
+        public ICollection<CustomerDogsDTO> customers { get; set; } = new List<CustomerDogsDTO>();
     }
 }

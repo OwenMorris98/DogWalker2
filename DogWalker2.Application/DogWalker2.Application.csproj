@@ -16,8 +16,4 @@
     <ProjectReference Include="..\DogWalker2.Domain\DogWalker2.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Customers\Mapperly\" />
-  </ItemGroup>
-
 </Project>

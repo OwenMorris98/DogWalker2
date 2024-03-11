@@ -34,27 +34,35 @@ namespace DogWalker2.Infrastructure.Customers
 
         public async Task<ICollection<Customer>> GetAll()
         {
-            return await _context.Customers.ToListAsync(); 
+            return await _context.Customers.Include(c => c.Dogs).ToListAsync(); 
 
         }
 
-        public async Task<Customer> GetCustomerById(string id)
+        public async Task<Customer?> GetAllCustomerDataById(string id)
         {
-            try
-            {
-                return await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
-            }
-            catch(Exception ex)
-            {
-                string exception = ex.ToString();
-                return null;
-            }
+
+            var customer = await _context.Customers
+                 .Include(d => d.Dogs).FirstOrDefaultAsync(c => c.Id == id);
+
+            return customer != null ? customer : null;
+        }
+
+        public async Task<Customer?> GetCustomerById(string id)
+        {
+            
+               var customer  = await _context.Customers
+                    .Include(d => d.Dogs)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(c => c.Id == id);
+
+            return customer != null ? customer : null;
             
         } 
             
 
         public void UpdateCustomer(Customer customer)
         {
+            _context.Customers.Attach(customer);
             _context.Customers.Update(customer);
         }
     }

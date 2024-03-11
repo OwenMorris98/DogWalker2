@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using DogWalker2.Application.Customers.Queries.GetById;
+using DogWalker2.Application.Customers.Queries.GetAllCustomerDataById;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -62,7 +63,24 @@ namespace DogWalker2.Api.Customers
             }
         
         }
+        
+        // GET api/<CustomerController>/5
+        [HttpGet("GetDetails/{id}")]
+        public async Task<IActionResult> GetDogsByCustomerId(string id)
+        {
+            var query = new GetAllCustomerDataByIdQuery(id);
 
+            try
+            {
+                var customer = await _mediator.Send(query);
+                return Ok(customer);
+            }
+            catch
+            {
+                return NotFound();
+            }
+
+        }
         // POST api/<CustomerController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CustomerDTO customer)

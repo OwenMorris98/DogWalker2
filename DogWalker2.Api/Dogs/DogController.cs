@@ -6,6 +6,9 @@ using System.Drawing.Printing;
 using MediatR;
 using DogWalker2.Application.Customers.Commands.CreateCommands;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using DogWalker2.Application.Dogs.CreateCommands;
+using DogWalker2.Application.Dogs.DTOs;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace DogWalker2.Api.Dogs
@@ -38,22 +41,24 @@ namespace DogWalker2.Api.Dogs
             return "value";
         }
 
-        //// POST api/<DogController>
-        //[HttpPost]
-        //public async void Post([FromBody] AddCustomerDTO customer)
-        //{
-        //    var request = new CreateCustomerCommand(customer);
-        //    try
-        //    {
-        //        await _mediator.Send(request);
-        //    }
-        //    catch
-        //    {
-        //        throw new NotImplementedException();
-        //    }
+        // POST api/<DogController>
+        [HttpPost]
+        public async Task<IActionResult> Post(string CustomerId, [FromBody] DogDTO dog)
+        {
+            dog.customer_id = CustomerId;
+            var request = new CreateDogCommand(dog);
+            try
+            {
+                var response = await _mediator.Send(request);
+                return Ok(response);
+            }
+            catch
+            {
+                throw new NotImplementedException();
+            }
 
 
-        //}
+        }
 
         // PUT api/<DogController>/5
         [HttpPut("{id}")]

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DogWalker2.Application.Dogs.CreateCommands;
+using DogWalker2.Application.Dogs.DTOs;
 using DogWalker2.Domain.Dogs;
 
 namespace DogWalker2.Application.Dogs
@@ -15,7 +17,7 @@ namespace DogWalker2.Application.Dogs
 
         Task<IEnumerable<Dog>> GetDogsByCustomerId(string customerId);
 
-        Task<bool> AddDogAsync(Dog dog);
+        Task<DogDTO> AddDogAsync(CreateDogCommand dog);
         bool AddDog(Dog dog);
         bool RemoveDog(Dog dog);
         bool UpdateDog(Dog dog);

@@ -1,5 +1,6 @@
 ﻿
 using DogWalker2.Application.Customers.DTOs;
+using DogWalker2.Application.Mapperly;
 using DogWalker2.Domain.Customers;
 using DogWalker2.Infrastructure.UnitOfWork;
 using MediatR;
@@ -15,11 +16,13 @@ namespace DogWalker2.Application.Customers.Commands.CreateCommands
     {
         private readonly ICustomerService _customerService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly CustomerMapper _mapper;
 
         public CreateCustomerCommandHandler(ICustomerService customerService, IUnitOfWork unitOfWork)
         {
             _customerService = customerService;
             _unitOfWork = unitOfWork;
+            _mapper = new CustomerMapper();
         }
 
         async Task<CustomerDTO> IRequestHandler<CreateCustomerCommand, CustomerDTO>.Handle(CreateCustomerCommand request, CancellationToken cancellationToken)

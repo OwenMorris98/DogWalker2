@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using DogWalker2.Application.Customers.Commands.CreateCommands;
 using DogWalker2.Application.Customers.Commands.UpdateCommands;
 using DogWalker2.Application.Customers.DTOs;
+using DogWalker2.Application.Customers.Queries.GetAllCustomerDataById;
+using DogWalker2.Application.Mapperly;
 using DogWalker2.Domain.Customers;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Update;
@@ -18,6 +21,8 @@ namespace DogWalker2.Application.Customers
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        
+        private CustomerMapper mapper = new CustomerMapper();
 
         public CustomerService(ICustomerRepository customerRepository) 
        {
@@ -32,31 +37,10 @@ namespace DogWalker2.Application.Customers
 
         public async Task<CustomerDTO> addCustomerData(CreateCustomerCommand command)
         {
-            Customer customer = new Customer()
-            {
-                Id = Guid.NewGuid().ToString(),
-                first_name = command.customer.first_name,
-                last_name = command.customer.last_name,
-                address = command.customer.address,
-                city = command.customer.city,
-                state = command.customer.state, 
-                zipcode = command.customer.zipcode,
-            };
-
-           
+            var customer = mapper.CustomerDTOtoCustomer(command.customer);
+            customer.Id = Guid.NewGuid().ToString();      
             this._customerRepository.addCustomerData(customer);
-
-            CustomerDTO customerToAdd = new CustomerDTO()
-            {
-                first_name = customer.first_name,
-                last_name = customer.last_name,
-                address = customer.address,
-                city = customer.city,
-                state = customer.state,
-                zipcode = customer.zipcode
-            };
-
-            return customerToAdd;
+            return command.customer;
         }
 
         public async Task deleteCustomer(string id)
@@ -67,20 +51,25 @@ namespace DogWalker2.Application.Customers
 
         public async Task<Customer> getCustomerById(string id)
         {
+           
             var customer = await this._customerRepository.GetCustomerById(id);
             return customer;
         }
-
+        
+        
         public async Task<GetAllCustomersDTO> GetAll()
         {
-            var customer = await _customerRepository.GetAll();
-
-            GetAllCustomersDTO customerList = new GetAllCustomersDTO()
+            var customers = await _customerRepository.GetAll();
+            
+            GetAllCustomersDTO customersDTO = new GetAllCustomersDTO();
+            foreach(var customer in customers)
             {
-                customers = customer
-            };
+                CustomerDogsDTO data = new CustomerDogsDTO();
+                data = mapper.CustomerToCustomerDogsDTO(customer);
+               customersDTO.customers.Add(data);
+            }
 
-            return customerList;
+            return customersDTO;
         }
 
         public async Task<CustomerDTO> UpdateCustomer(UpdateCustomerCommand command)
@@ -89,25 +78,10 @@ namespace DogWalker2.Application.Customers
 
             if(customer != null)
             {
-                customer.first_name = command.customerToUpdate.first_name;
-                customer.last_name = command.customerToUpdate.last_name;
-                customer.address = command.customerToUpdate.address;
-                customer.city = command.customerToUpdate.city;
-                customer.state = command.customerToUpdate.state;
-                customer.zipcode = command.customerToUpdate.zipcode;
-
-                this._customerRepository.UpdateCustomer(customer);
-
-                var updatedCustomer = new CustomerDTO()
-                {
-                    first_name = customer.first_name,
-                    last_name = customer.last_name,
-                    address = customer.address,
-                    city = customer.city,
-                    state = customer.state,
-                    zipcode = customer.zipcode
-                };
-                return updatedCustomer;
+                var customerEntity = mapper.CustomerDTOtoCustomer(command.customerToUpdate);
+                customerEntity.Id = command.id;
+                this._customerRepository.UpdateCustomer(customerEntity);
+                return command.customerToUpdate;
             }
             return new CustomerDTO();
           
@@ -117,16 +91,15 @@ namespace DogWalker2.Application.Customers
         {
           var customerEntity = await _customerRepository.GetCustomerById(id);
 
-            CustomerDTO customerDTO = new CustomerDTO()
-            {
-                //Id = customerEntity.Id,
-                first_name = customerEntity.first_name,
-                last_name = customerEntity.last_name,
-                address = customerEntity.address,
-                city = customerEntity.city,
-                state = customerEntity.state,
-                zipcode = customerEntity.zipcode,
-            };
+            var customerDTO = mapper.CustomerToCustomerDTO(customerEntity);            
+            return customerDTO;
+        }
+
+        public async Task<CustomerDogsDTO> GetAllCustomerDataById(string id)
+        {
+            var customerEntity = await _customerRepository.GetAllCustomerDataById(id);
+
+            var customerDTO = mapper.CustomerToCustomerDogsDTO(customerEntity);
             return customerDTO;
         }
     }

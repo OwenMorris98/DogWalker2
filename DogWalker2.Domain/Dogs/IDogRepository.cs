@@ -17,5 +17,7 @@ namespace DogWalker2.Domain.Dogs
         Task<Dog> GetDogById(string id);
         Task<IEnumerable<Dog>> GetDogsByCustomerId(string customerId);
 
+    
+
     }
 }

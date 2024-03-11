@@ -1,0 +1,143 @@
+﻿@page "/customers"
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@inject HttpClient Http
+@rendermode InteractiveWebAssembly
+
+
+<PageTitle>Customers</PageTitle>
+
+<h1>Customers</h1>
+
+<p>This component demonstrates fetching customer data from the server.</p>
+
+@if (response.customers is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var customer in response.customers)
+            {
+                <tr>
+                    <td>@customer.first_name</td>
+                    <td>@customer.last_name</td>
+                    <td>@customer.address, @customer.city, @customer.state, @customer.zipcode</td>
+                    <button class="btn btn-primary active" @onclick="() => isPressed(customer.id)">Edit</button>
+
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    if (editButton && customerToEdit is not null)
+    {
+        <form  @onsubmit="submitEdit">
+        <input type="hidden" @bind="@customerToEdit.id" />
+        <input @bind="@customerToEdit.first_name" />
+        <input @bind="@customerToEdit.last_name" />
+
+        <input type="submit" />
+        </form>
+
+    }
+}
+
+@code {
+    private Root response = new Root();
+
+    private bool editButton { get; set; } = false;
+
+    private Customer? customerToEdit = new();
+
+    private string past_id { get; set; } = String.Empty;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await Http.GetFromJsonAsync<Root>("https://localhost:7188/api/Customer");
+
+        if (result is not null)
+        {
+            response = result;
+        }
+    }
+
+    private void isPressed(string customerId)
+    {
+        var cust = response.customers.Where(c => c.id == customerId).SingleOrDefault();
+
+        if (!editButton)
+        {
+            past_id = customerId;
+            editButton = true;
+            customerToEdit = cust;
+        }
+        else if (editButton && customerId != past_id)
+        {
+            customerToEdit = cust;
+            past_id = customerId;
+        }
+        else
+        {
+            customerToEdit = null;
+            editButton = false;
+        }
+    }
+
+    private async Task submitEdit()
+    {
+            editButton = false;
+            var editParams = customerToEdit;
+            var response = await Http.PutAsJsonAsync<Customer>($"https://localhost:7188/api/Customer/{customerToEdit.id}", customerToEdit);
+            Console.WriteLine(response.Content);
+            
+      
+    }
+
+
+    public class Root
+    {
+        public List<Customer> customers { get; set; }
+    }
+    public class Customer
+    {
+        public string id { get; set; }
+        public string? first_name { get; set; }
+        public string? last_name { get; set; }
+        public string? address { get; set; }
+        public string? city { get; set; }
+        public string? state { get; set; }
+        public string? zipcode { get; set; }
+        public List<Dogs>? dogs { get; set; } = new();
+
+
+    }
+
+    public class Dogs
+    {
+        public string name { get; set; }
+
+        public string breed { get; set; }
+
+        public int age { get; set; }
+
+        public string? notes { get; set; }
+
+
+        // [JsonIgnore]
+        // public string? customer_id { get; set; }
+    }
+}

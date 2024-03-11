@@ -8,6 +8,7 @@ using DogWalker2.Application.Customers.Queries.GetById;
 using DogWalker2.Application.Customers.Commands.CreateCommands;
 using DogWalker2.Domain.Customers;
 using DogWalker2.Application.Customers.Commands.UpdateCommands;
+using DogWalker2.Application.Customers.Queries.GetAllCustomerDataById;
 
 namespace DogWalker2.Application.Customers
 {
@@ -24,6 +25,8 @@ namespace DogWalker2.Application.Customers
         Task<GetAllCustomersDTO> GetAll();
 
         Task<CustomerDTO> GetCustomerById(string id);
+
+        Task<CustomerDogsDTO> GetAllCustomerDataById(string id);
 
 
     }

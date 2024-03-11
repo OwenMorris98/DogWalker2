@@ -27,16 +27,6 @@ namespace DogWalker2.Application.Customers.Commands.UpdateCommands
            var response = await _customerService.UpdateCustomer(request);
             await _unitOfWork.SaveAsync();
 
-            //CustomerDTO response = new CustomerDTO()
-            //{
-            //    first_name = request.customerToUpdate.first_name,
-            //    last_name = request.customerToUpdate.last_name,
-            //    address = request.customerToUpdate.address,
-            //    city = request.customerToUpdate.city,
-            //    state = request.customerToUpdate.state,
-            //    zipcode = request.customerToUpdate.zipcode
-            //};
-
             return response;
         }
 

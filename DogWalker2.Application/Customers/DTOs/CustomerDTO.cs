@@ -1,16 +1,17 @@
-﻿using DogWalker2.Domain.Dogs;
+﻿using DogWalker2.Application.Dogs.DTOs;
+using DogWalker2.Domain.Dogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DogWalker2.Application.Customers.DTOs
 {
     public class CustomerDTO
     {
-       // public string Id { get; set; }
-
+   
         public string? first_name { get; set; }
 
         public string? last_name { get; set; }
@@ -23,20 +24,9 @@ namespace DogWalker2.Application.Customers.DTOs
 
         public string? zipcode { get; set; }
 
-        //public CustomerDTO()
-        //{
-            
-        //}
+        
+        
 
-        //public CustomerDTO(string? first_name, string? last_name, string? address, string? city, string? state, string? zipcode)
-        //{
-            
-        //    this.first_name = first_name;
-        //    this.last_name = last_name;
-        //    this.address = address;
-        //    this.city = city;
-        //    this.state = state;
-        //    this.zipcode = zipcode;
-        //}
+       
     }
 }

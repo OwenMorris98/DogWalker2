@@ -2,7 +2,9 @@
 import './App.css'
 import { useListState } from './hooks/useListState'
 import { Link } from "react-router-dom"
+import { Register } from './Register'
 import {
+  Button,
   AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
@@ -10,15 +12,17 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   AlertDialogCloseButton,
+  useDisclosure,
+  
 } from '@chakra-ui/react'
 
 function App() {
   // const [count, setCount] = useState(0)
 
   const {customerList, handleDelete} = useListState()
-
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = React.useRef()
+  
+  //const cancelRef = useRef()
 
   return (
     <>
@@ -37,6 +41,7 @@ function App() {
         ))}
       </ul>
           <Link className='button' to='/Register'>Register Customer</Link>
+          
 
      
     </>

@@ -1,0 +1,19 @@
+﻿using DogWalker2.Application.Dogs.DTOs;
+using DogWalker2.Domain.Dogs;
+using Riok.Mapperly.Abstractions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DogWalker2.Application.Mapperly
+{
+    [Mapper]
+    public partial class DogMapper
+    {
+        public partial DogDTO DogToDogDTO(Dog dog);
+
+        public partial Dog DogDTOtoDog(DogDTO dog);
+    }
+}
