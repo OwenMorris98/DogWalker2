@@ -1,0 +1,38 @@
+﻿<h3>Add Customer</h3>
+
+<EditForm Model="customerToPost" OnSubmit="() => postCustomer()">
+<div class="row">
+    <div class="col-6">
+        <HxInputText Label="First name" @bind-Value="@customerToPost.first_name" />
+    </div>
+    <div class="col-6">
+        <HxInputText Label="Last name" @bind-Value="@customerToPost.last_name" />
+    </div>
+    <div class="col-6">
+            <HxInputText Label="Address" @bind-Value="@customerToPost.address" />
+    </div>
+    <div class="col-6">
+        <HxInputText Label="City" @bind-Value="@customerToPost.city" />
+    </div>
+    <div class="col-6">
+        <HxInputText Label="State" @bind-Value="@customerToPost.state" />
+    </div>
+    <div class="col-6">
+        <HxInputText Label="Zip" @bind-Value="@customerToPost.zipcode" />
+    </div>
+        <HxSubmit Text="Submit" Size="ButtonSize.Regular" Color="ThemeColor.Primary"  />
+</div>
+</EditForm>
+
+@inject ICustomerService customerService
+@code {
+
+
+    private Customer customerToPost { get; set; } = new();
+
+    private async Task postCustomer()
+    {
+        var response = await customerService.PostCustomer(customerToPost);
+        
+    }
+}

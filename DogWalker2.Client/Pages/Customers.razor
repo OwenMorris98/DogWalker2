@@ -7,6 +7,7 @@
 
 <PageTitle>Customers</PageTitle>
 
+
 <h1>Customers</h1>
 
 <p>This component demonstrates fetching customer data from the server.</p>
@@ -17,46 +18,81 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Address</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
+    <HxButton Size="ButtonSize.Regular" Color="ThemeColor.Primary" OnClick="() => setRegisterCustomer()">Add Customer</HxButton>
 
-            @foreach (var customer in response.customers)
-            {
-                <tr>
-                    <td>@customer.first_name</td>
-                    <td>@customer.last_name</td>
-                    <td>@customer.address, @customer.city, @customer.state, @customer.zipcode</td>
-                    <button class="btn btn-primary active" @onclick="() => isPressed(customer.id)">Edit</button>
-
-
-                </tr>
-            }
-
-        </tbody>
-    </table>
-    if (editButton && customerToEdit is not null)
+    @if (registerCustomer)
     {
-        <form  @onsubmit="submitEdit">
-        <input type="hidden" @bind="@customerToEdit.id" />
-        <input @bind="@customerToEdit.first_name" />
-        <input @bind="@customerToEdit.last_name" />
 
-        <input type="submit" />
-        </form>
 
+        <PostCustomer />
     }
+    else
+    {
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Address</th>
+                    <th>Dogs</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var customer in response.customers)
+                {
+                    <tr>
+                        <td>@customer.first_name</td>
+                        <td>@customer.last_name</td>
+                        <td>@customer.address, @customer.city, @customer.state, @customer.zipcode</td>
+                        @if (customer.dogs is not null && customer.dogs.Count > 0)
+                        {
+                            <HxContextMenu>
+                                @foreach (var dog in customer.dogs)
+                                {
+                                    <HxContextMenuItem>@dog.name</HxContextMenuItem>
+                                }
+
+
+                            </HxContextMenu>
+                        }
+                        <button class="btn btn-primary active" @onclick="() => isPressed(customer.id)">Edit</button>
+
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        if (editButton && customerToEdit is not null)
+        {
+            <form  @onsubmit="submitEdit">
+                <input type="hidden" @bind="@customerToEdit.id" />
+
+
+                <div class="row">
+                    <div class="col-6">
+                        <HxInputText Label="First name" @bind-Value="@customerToEdit.first_name" />
+                    </div>
+                    <div class="col-6">
+                        <HxInputText Label="Last name" @bind-Value="@customerToEdit.last_name" />
+                    </div>
+                </div>
+
+                <HxSubmit Text="Submit" Size="ButtonSize.Regular" Color="ThemeColor.Primary" />
+            </form>
+        }
+    }
+
+
 }
 
+@inject ICustomerService customerService;
 @code {
-    private Root response = new Root();
+    private CustomerRoot response = new();
 
     private bool editButton { get; set; } = false;
 
@@ -64,10 +100,11 @@ else
 
     private string past_id { get; set; } = String.Empty;
 
+    private bool registerCustomer { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await Http.GetFromJsonAsync<Root>("https://localhost:7188/api/Customer");
+        var result = await customerService.GetAllCustomersRequest();
 
         if (result is not null)
         {
@@ -97,47 +134,28 @@ else
         }
     }
 
+    private void clearIsPressed()
+    {
+        customerToEdit = null;
+        editButton = false;
+    }
+
     private async Task submitEdit()
     {
-            editButton = false;
-            var editParams = customerToEdit;
+        editButton = false;
+        if(customerToEdit is not null)
+        {
             var response = await Http.PutAsJsonAsync<Customer>($"https://localhost:7188/api/Customer/{customerToEdit.id}", customerToEdit);
-            Console.WriteLine(response.Content);
-            
-      
+        }
+
     }
 
-
-    public class Root
+    public void setRegisterCustomer()
     {
-        public List<Customer> customers { get; set; }
-    }
-    public class Customer
-    {
-        public string id { get; set; }
-        public string? first_name { get; set; }
-        public string? last_name { get; set; }
-        public string? address { get; set; }
-        public string? city { get; set; }
-        public string? state { get; set; }
-        public string? zipcode { get; set; }
-        public List<Dogs>? dogs { get; set; } = new();
-
-
+        registerCustomer = !registerCustomer;
     }
 
-    public class Dogs
-    {
-        public string name { get; set; }
-
-        public string breed { get; set; }
-
-        public int age { get; set; }
-
-        public string? notes { get; set; }
 
 
-        // [JsonIgnore]
-        // public string? customer_id { get; set; }
-    }
+
 }
