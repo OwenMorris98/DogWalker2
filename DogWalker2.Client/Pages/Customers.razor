@@ -19,6 +19,7 @@
 else
 {
     <HxButton Size="ButtonSize.Regular" Color="ThemeColor.Primary" OnClick="() => setRegisterCustomer()">Add Customer</HxButton>
+    <HxButton Size="ButtonSize.Regular" Icon="BootstrapIcon.Trash" OnClick="() => handleDeleteClick(selected_customer)">Delete</HxButton>
 
     @if (registerCustomer)
     {
@@ -28,8 +29,34 @@ else
     }
     else
     {
-
-
+        <HxGrid @ref="customerGrid" TItem="Customer" DataProvider="GetCustomerGrid" Responsive="true" SelectionEnabled="true" @bind-SelectedDataItem="selected_customer" >
+            
+            <Columns>
+                <HxGridColumn HeaderText="First Name" ItemTextSelector="customer => customer.first_name" />
+                <HxGridColumn HeaderText="Last Name" ItemTextSelector="customer => customer.last_name" />
+                <HxGridColumn HeaderText="Address" ItemTextSelector="customer => customer.address" />
+                <HxGridColumn HeaderText="City" ItemTextSelector="customer => customer.city" />
+                <HxGridColumn HeaderText="State" ItemTextSelector="customer => customer.state" />
+                <HxGridColumn HeaderText="Zip" ItemTextSelector="customer => customer.zipcode" />
+                
+                    <HxContextMenuGridColumn Context="item">
+                    @if(item.dogs.Count > 0)
+                    {
+     
+                    <HxContextMenu>
+                        @foreach(var dog in item.dogs)
+                        {
+                            
+                        
+                        <HxContextMenuItem Text="@dog.name" Icon="BootstrapIcon.Android"></HxContextMenuItem>
+                        }
+                </HxContextMenu>
+                    }
+                </HxContextMenuGridColumn>
+              
+            </Columns>
+        </HxGrid>
+@* 
         <table class="table">
             <thead>
                 <tr>
@@ -66,7 +93,7 @@ else
                 }
 
             </tbody>
-        </table>
+        </table> *@
         if (editButton && customerToEdit is not null)
         {
             <form  @onsubmit="submitEdit">
@@ -91,6 +118,7 @@ else
 }
 
 @inject ICustomerService customerService;
+@inject NavigationManager nav;
 @code {
     private CustomerRoot response = new();
 
@@ -98,9 +126,13 @@ else
 
     private Customer? customerToEdit = new();
 
+    public Customer? selected_customer { get; set; } = new();
+
     private string past_id { get; set; } = String.Empty;
 
     private bool registerCustomer { get; set; } = false;
+
+    private HxGrid<Customer> customerGrid;
 
     protected override async Task OnInitializedAsync()
     {
@@ -110,6 +142,15 @@ else
         {
             response = result;
         }
+    }
+
+    private async Task<GridDataProviderResult<Customer>> GetCustomerGrid(GridDataProviderRequest<Customer> request)
+    {
+        return new GridDataProviderResult<Customer>()
+            {
+                Data = response.customers.ToList(),
+                TotalCount = response.customers.Count()
+            };
     }
 
     private void isPressed(string customerId)
@@ -155,7 +196,19 @@ else
         registerCustomer = !registerCustomer;
     }
 
+    private async void handleDeleteClick(Customer selected_customer)
+    {
+        if(selected_customer is not null)
+        {
+            var httpResponseMessage = await customerService.DeleteCustomerRequest(selected_customer.id);
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                response.customers.Remove(selected_customer);
 
+               await customerGrid.RefreshDataAsync();
+            }
+        }
+    }
 
 
 }
