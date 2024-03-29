@@ -24,7 +24,7 @@ namespace DogWalker2.Domain.Customers
 
         public string? zipcode { get; set; }
 
-        public ICollection<Dog> Dogs { get;  } = new List<Dog>();
+        public ICollection<Dog> Dogs { get; set; } = new List<Dog>();
 
      
 

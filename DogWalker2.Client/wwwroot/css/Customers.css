@@ -1,0 +1,15 @@
+﻿
+
+.editCustomerButtons {
+    display:flex;
+    align-items:center;
+}
+
+.addCustomerButton {
+    margin:auto;
+    margin-bottom: 1rem;
+}
+
+.addCustomer {
+    margin-top: 0.5rem;
+}

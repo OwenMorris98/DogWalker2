@@ -1,4 +1,6 @@
-﻿<h3>Add Customer</h3>
+﻿<div class="addCustomer">
+
+<h3>Add Customer</h3>
 
 <EditForm Model="customerToPost" OnSubmit="() => postCustomer()">
 <div class="row">
@@ -20,19 +22,25 @@
     <div class="col-6">
         <HxInputText Label="Zip" @bind-Value="@customerToPost.zipcode" />
     </div>
-        <HxSubmit Text="Submit" Size="ButtonSize.Regular" Color="ThemeColor.Primary"  />
+        <HxSubmit Text="Submit" Size="ButtonSize.Regular" Color="ThemeColor.Primary" CssClass="addCustomerButton"  />
 </div>
 </EditForm>
+</div>
 
 @inject ICustomerService customerService
 @code {
 
+    [Parameter]
+    public EventCallback<bool> OnAction { get; set; }
 
     private Customer customerToPost { get; set; } = new();
 
     private async Task postCustomer()
     {
         var response = await customerService.PostCustomer(customerToPost);
-        
+        await OnAction.InvokeAsync(false);
+
     }
+
+
 }

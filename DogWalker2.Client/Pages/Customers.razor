@@ -5,6 +5,8 @@
 @rendermode InteractiveWebAssembly
 
 
+
+
 <PageTitle>Customers</PageTitle>
 
 
@@ -18,14 +20,12 @@
 }
 else
 {
-    <HxButton Size="ButtonSize.Regular" Color="ThemeColor.Primary" OnClick="() => setRegisterCustomer()">Add Customer</HxButton>
-    <HxButton Size="ButtonSize.Regular" Icon="BootstrapIcon.Trash" OnClick="() => handleDeleteClick(selected_customer)">Delete</HxButton>
-
+    <HxButton Size="ButtonSize.Regular" Color="ThemeColor.Primary" OnClick="() => setRegisterCustomer()" CssClass="addCustomerButton">Add Customer</HxButton>
+    
     @if (registerCustomer)
     {
 
-
-        <PostCustomer />
+        <PostCustomer OnAction="HandlePostCustomerAction"/>
     }
     else
     {
@@ -40,60 +40,20 @@ else
                 <HxGridColumn HeaderText="Zip" ItemTextSelector="customer => customer.zipcode" />
                 
                     <HxContextMenuGridColumn Context="item">
-                    @if(item.dogs.Count > 0)
-                    {
-     
+                    
+        
                     <HxContextMenu>
-                        @foreach(var dog in item.dogs)
-                        {
-                            
-                        
-                        <HxContextMenuItem Text="@dog.name" Icon="BootstrapIcon.Android"></HxContextMenuItem>
-                        }
+                            <HxContextMenuItem Text="Edit" Icon="BootstrapIcon.Pencil" OnClick="() => isPressed(item.id)"></HxContextMenuItem>
+                            <HxContextMenuItem Text="Delete" Icon="BootstrapIcon.Trash" OnClick="() => handleDeleteClick(item)"></HxContextMenuItem>
+                   
                 </HxContextMenu>
-                    }
+                    
                 </HxContextMenuGridColumn>
               
             </Columns>
         </HxGrid>
-@* 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Address</th>
-                    <th>Dogs</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach (var customer in response.customers)
-                {
-                    <tr>
-                        <td>@customer.first_name</td>
-                        <td>@customer.last_name</td>
-                        <td>@customer.address, @customer.city, @customer.state, @customer.zipcode</td>
-                        @if (customer.dogs is not null && customer.dogs.Count > 0)
-                        {
-                            <HxContextMenu>
-                                @foreach (var dog in customer.dogs)
-                                {
-                                    <HxContextMenuItem>@dog.name</HxContextMenuItem>
-                                }
 
 
-                            </HxContextMenu>
-                        }
-                        <button class="btn btn-primary active" @onclick="() => isPressed(customer.id)">Edit</button>
-
-
-                    </tr>
-                }
-
-            </tbody>
-        </table> *@
         if (editButton && customerToEdit is not null)
         {
             <form  @onsubmit="submitEdit">
@@ -109,7 +69,10 @@ else
                     </div>
                 </div>
 
-                <HxSubmit Text="Submit" Size="ButtonSize.Regular" Color="ThemeColor.Primary" />
+                <div class="editCustomerButtons">
+                    <HxSubmit Text="Submit" Size="ButtonSize.Regular" Color="ThemeColor.Primary" />
+                <HxButton Text="Cancel" Size="ButtonSize.Regular" Color="ThemeColor.Secondary" OnClick="clearIsPressed" />
+                </div>
             </form>
         }
     }
@@ -135,6 +98,11 @@ else
     private HxGrid<Customer> customerGrid;
 
     protected override async Task OnInitializedAsync()
+    {
+        await LoadCustomers();
+    }
+
+    private async Task LoadCustomers()
     {
         var result = await customerService.GetAllCustomersRequest();
 
@@ -186,7 +154,12 @@ else
         editButton = false;
         if(customerToEdit is not null)
         {
-            var response = await Http.PutAsJsonAsync<Customer>($"https://localhost:7188/api/Customer/{customerToEdit.id}", customerToEdit);
+            //var response = await Http.PutAsJsonAsync<Customer>($"https://localhost:7188/api/Customer/{customerToEdit.id}", customerToEdit);
+            var response = await customerService.EditCustomerRequest(customerToEdit.id, customerToEdit);
+            if(!response.IsSuccessStatusCode)
+            {
+                nav.NavigateTo("/customers", true);
+            }
         }
 
     }
@@ -205,9 +178,15 @@ else
             {
                 response.customers.Remove(selected_customer);
 
-               await customerGrid.RefreshDataAsync();
+                await customerGrid.RefreshDataAsync();
             }
         }
+    }
+    private async Task HandlePostCustomerAction(bool actionResult)
+    {
+        registerCustomer = actionResult;
+        await LoadCustomers();
+        await customerGrid.RefreshDataAsync();
     }
 
 
