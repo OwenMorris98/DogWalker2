@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DogWalker2.Application.Dogs.CreateCommands;
+using DogWalker2.Application.Dogs.Commands.CreateCommands;
 using DogWalker2.Application.Dogs.DTOs;
 using DogWalker2.Domain.Dogs;
 

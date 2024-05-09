@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DogWalker2.Application.Dogs.CreateCommands
+namespace DogWalker2.Application.Dogs.Commands.CreateCommands
 {
     public class CreateDogCommandHandler : IRequestHandler<CreateDogCommand, DogDTO>
     {
