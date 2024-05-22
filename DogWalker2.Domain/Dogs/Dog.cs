@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DogWalker2.Domain.Customers;
+using DogWalker2.Domain.Walks;
 
 namespace DogWalker2.Domain.Dogs
 {
@@ -27,7 +28,7 @@ namespace DogWalker2.Domain.Dogs
         [ForeignKey(nameof(customer_id))]
         public Customer Customer { get; set; }
 
-    
+        public ICollection<Walk> Walks { get; set; }
 
     }
 }

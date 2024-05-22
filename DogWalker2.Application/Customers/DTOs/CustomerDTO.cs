@@ -1,5 +1,6 @@
 ﻿using DogWalker2.Application.Dogs.DTOs;
 using DogWalker2.Domain.Dogs;
+using DogWalker2.Domain.Payments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,9 @@ namespace DogWalker2.Application.Customers.DTOs
 
         public string? zipcode { get; set; }
 
-        
-        
 
        
+
+
     }
 }

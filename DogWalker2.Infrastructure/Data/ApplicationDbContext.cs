@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using DogWalker2.Application.Data;
 using DogWalker2.Domain.Dogs;
+using DogWalker2.Domain.Locations;
+using DogWalker2.Domain.Payments;
+using DogWalker2.Domain.Walkers;
+using DogWalker2.Domain.Walks;
 using DogWalker2.Domain.Customers;
 using DogWalker2.Data;
 
@@ -13,6 +17,14 @@ namespace DogWalker2.Infrastructure.Data
 
         public DbSet<Dog> Dogs { get; set; }
         public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Location> Locations { get; set; }
+
+        public DbSet<Payment> Payment { get; set; }
+
+        public DbSet<Walker> Walkers { get; set; }
+
+        public DbSet<Walk> Walks { get; set; }
 
         public Task<int> SaveChangesAsync()
         {
@@ -28,31 +40,8 @@ namespace DogWalker2.Infrastructure.Data
         {
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Customer>().HasData(
-        //        new Customer
-        //        {
-        //            Id = Guid.NewGuid().ToString(),
-        //            first_name = "Owen",
-        //            last_name = "Morris",
-        //            address = "145 Jamestown Ave",
-        //            city = "Kennet Square",
-        //            state = "PA",
-        //            zipcode = "19348"
-        //        },
-        //        new Customer
-        //        {
-        //            Id = Guid.NewGuid().ToString(),
-        //            first_name = "Riley",
-        //            last_name = "Zarko",
-        //            address = "9 E New Jersey Ave",
-        //            city = "Beach Haven",
-        //            state = "NJ",
-        //            zipcode = "15051"
-        //        }
-        //    );
-        //}
+       
+
 
     }
 }

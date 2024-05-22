@@ -6,7 +6,7 @@ using System.Drawing.Printing;
 using MediatR;
 using DogWalker2.Application.Customers.Commands.CreateCommands;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using DogWalker2.Application.Dogs.CreateCommands;
+using DogWalker2.Application.Dogs.Commands.CreateCommands;
 using DogWalker2.Application.Dogs.DTOs;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
