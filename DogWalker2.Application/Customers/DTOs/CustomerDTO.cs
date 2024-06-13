@@ -1,6 +1,5 @@
 ﻿using DogWalker2.Application.Dogs.DTOs;
-using DogWalker2.Domain.Dogs;
-using DogWalker2.Domain.Payments;
+using DogWalker2.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

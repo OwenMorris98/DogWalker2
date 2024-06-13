@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DogWalker2.Application.Customers.DTOs;
 using DogWalker2.Application.Customers.Queries.GetById;
 using DogWalker2.Application.Customers.Commands.CreateCommands;
-using DogWalker2.Domain.Customers;
+using DogWalker2.Domain;
 using DogWalker2.Application.Customers.Commands.UpdateCommands;
 using DogWalker2.Application.Customers.Queries.GetAllCustomerDataById;
 

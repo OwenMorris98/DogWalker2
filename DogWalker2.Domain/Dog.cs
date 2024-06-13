@@ -5,15 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DogWalker2.Domain.Customers;
 using DogWalker2.Domain.Walks;
 
-namespace DogWalker2.Domain.Dogs
+namespace DogWalker2.Domain
 {
     public class Dog
     {
         [Key]
-        public string Id { get; set; } 
+        public string Id { get; set; }
 
         public string Name { get; set; }
 

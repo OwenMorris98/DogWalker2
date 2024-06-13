@@ -11,7 +11,7 @@ using DogWalker2.Application.Customers.Commands.UpdateCommands;
 using DogWalker2.Application.Customers.DTOs;
 using DogWalker2.Application.Customers.Queries.GetAllCustomerDataById;
 using DogWalker2.Application.Mapperly;
-using DogWalker2.Domain.Customers;
+using DogWalker2.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Update;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;

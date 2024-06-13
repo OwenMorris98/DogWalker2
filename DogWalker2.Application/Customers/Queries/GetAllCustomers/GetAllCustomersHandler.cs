@@ -1,5 +1,5 @@
 ﻿using DogWalker2.Application.Customers.DTOs;
-using DogWalker2.Domain.Customers;
+using DogWalker2.Domain;
 using DogWalker2.Infrastructure.UnitOfWork;
 using MediatR;
 using System;

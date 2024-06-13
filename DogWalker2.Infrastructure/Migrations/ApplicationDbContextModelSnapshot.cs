@@ -22,7 +22,7 @@ namespace DogWalker2.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DogWalker2.Domain.Customers.Customer", b =>
+            modelBuilder.Entity("DogWalker2.Domain.Customer", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -190,7 +190,7 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<int>("LocationID")
+                    b.Property<int?>("LocationID")
                         .HasColumnType("int");
 
                     b.Property<string>("Notes")
@@ -220,7 +220,7 @@ namespace DogWalker2.Infrastructure.Migrations
 
             modelBuilder.Entity("DogWalker2.Domain.Dogs.Dog", b =>
                 {
-                    b.HasOne("DogWalker2.Domain.Customers.Customer", "Customer")
+                    b.HasOne("DogWalker2.Domain.Customer", "Customer")
                         .WithMany("Dogs")
                         .HasForeignKey("customer_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -231,7 +231,7 @@ namespace DogWalker2.Infrastructure.Migrations
 
             modelBuilder.Entity("DogWalker2.Domain.Payments.Payment", b =>
                 {
-                    b.HasOne("DogWalker2.Domain.Customers.Customer", "Customer")
+                    b.HasOne("DogWalker2.Domain.Customer", "Customer")
                         .WithMany("Payments")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -264,9 +264,7 @@ namespace DogWalker2.Infrastructure.Migrations
 
                     b.HasOne("DogWalker2.Domain.Locations.Location", "Location")
                         .WithMany("Walks")
-                        .HasForeignKey("LocationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationID");
 
                     b.HasOne("DogWalker2.Domain.Walkers.Walker", "Walker")
                         .WithMany("Walks")
@@ -281,7 +279,7 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.Navigation("Walker");
                 });
 
-            modelBuilder.Entity("DogWalker2.Domain.Customers.Customer", b =>
+            modelBuilder.Entity("DogWalker2.Domain.Customer", b =>
                 {
                     b.Navigation("Dogs");
 

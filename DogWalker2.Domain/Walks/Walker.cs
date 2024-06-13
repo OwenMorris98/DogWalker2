@@ -1,12 +1,10 @@
-﻿using DogWalker2.Domain.Payments;
-using DogWalker2.Domain.Walks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DogWalker2.Domain.Walkers
+namespace DogWalker2.Domain.Walks
 {
     public class Walker
     {

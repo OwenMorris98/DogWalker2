@@ -1,6 +1,4 @@
-﻿using DogWalker2.Domain.Dogs;
-using DogWalker2.Domain.Payments;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,16 +6,17 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using DogWalker2.Domain.Walks;
 
-namespace DogWalker2.Domain.Customers
+namespace DogWalker2.Domain
 {
     public class Customer
     {
         public string Id { get; set; }
-        
+
         public string? first_name { get; set; }
 
-        public string? last_name { get; set;}
+        public string? last_name { get; set; }
 
         public string? address { get; set; }
 

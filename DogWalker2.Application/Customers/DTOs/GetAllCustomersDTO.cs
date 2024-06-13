@@ -1,4 +1,4 @@
-﻿using DogWalker2.Domain.Customers;
+﻿using DogWalker2.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,5 @@
 ﻿using DogWalker2.Application.Customers;
 using DogWalker2.Application.Data;
-using DogWalker2.Domain.Customers;
 using DogWalker2.Data;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using DogWalker2.Domain;
 
 namespace DogWalker2.Infrastructure.Customers
 {

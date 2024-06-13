@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DogWalker2.Domain.Dogs;
 
-namespace DogWalker2.Domain.Dogs
+namespace DogWalker2.Domain
 {
     public interface IDogRepository
     {
@@ -17,7 +16,7 @@ namespace DogWalker2.Domain.Dogs
         Task<Dog> GetDogById(string id);
         Task<IEnumerable<Dog>> GetDogsByCustomerId(string customerId);
 
-    
+
 
     }
 }

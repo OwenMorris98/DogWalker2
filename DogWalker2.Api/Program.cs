@@ -1,7 +1,5 @@
 using DogWalker2.Application.Customers;
 using DogWalker2.Application.Dogs;
-using DogWalker2.Domain.Customers;
-using DogWalker2.Domain.Dogs;
 using DogWalker2.Infrastructure.Customers;
 using DogWalker2.Infrastructure.Dogs;
 using DogWalker2.Infrastructure.Services;
@@ -12,6 +10,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Identity.Web;
 using DogWalker2.Infrastructure;
 using DogWalker.Infrastructure;
+using DogWalker2.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +42,7 @@ builder.Services.AddCors(options =>
      options.AddPolicy("CorsPolicy",
                         policy =>
                         {
-                            policy.WithOrigins("https://localhost:7055") // Add your client's origin(s) "http://localhost:5173", 
+                            policy.WithOrigins("https://localhost:7055", "http://localhost:3000") // Add your client's origin(s) "http://localhost:5173", 
                                   .AllowAnyHeader()
                                   .AllowAnyMethod()
                                   .AllowCredentials(); // Allow credentials (e.g., cookies, authentication headers)

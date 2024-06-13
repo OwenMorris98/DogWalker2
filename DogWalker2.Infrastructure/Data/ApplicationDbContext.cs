@@ -1,13 +1,9 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using DogWalker2.Application.Data;
-using DogWalker2.Domain.Dogs;
-using DogWalker2.Domain.Locations;
-using DogWalker2.Domain.Payments;
-using DogWalker2.Domain.Walkers;
-using DogWalker2.Domain.Walks;
-using DogWalker2.Domain.Customers;
 using DogWalker2.Data;
+using DogWalker2.Domain;
+using DogWalker2.Domain.Walks;
 
 namespace DogWalker2.Infrastructure.Data
 {

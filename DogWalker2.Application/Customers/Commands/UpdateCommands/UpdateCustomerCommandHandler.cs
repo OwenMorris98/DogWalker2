@@ -1,5 +1,5 @@
 ﻿using DogWalker2.Infrastructure.UnitOfWork;
-using DogWalker2.Domain.Customers;
+using DogWalker2.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;

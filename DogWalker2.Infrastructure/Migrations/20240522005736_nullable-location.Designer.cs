@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DogWalker2.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240522001433_initial")]
-    partial class initial
+    [Migration("20240522005736_nullable-location")]
+    partial class nullablelocation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,7 +193,7 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<int>("LocationID")
+                    b.Property<int?>("LocationID")
                         .HasColumnType("int");
 
                     b.Property<string>("Notes")
@@ -267,9 +267,7 @@ namespace DogWalker2.Infrastructure.Migrations
 
                     b.HasOne("DogWalker2.Domain.Locations.Location", "Location")
                         .WithMany("Walks")
-                        .HasForeignKey("LocationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationID");
 
                     b.HasOne("DogWalker2.Domain.Walkers.Walker", "Walker")
                         .WithMany("Walks")

@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using DogWalker2.Application.Data;
 using DogWalker2.Application.Dogs;
-using DogWalker2.Domain.Dogs;
 using DogWalker2.Data;
 //using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using DogWalker2.Domain;
 
 namespace DogWalker2.Infrastructure.Dogs
 {

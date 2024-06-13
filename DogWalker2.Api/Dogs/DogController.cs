@@ -60,6 +60,9 @@ namespace DogWalker2.Api.Dogs
 
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> PostWalk(string customerId )
+
         // PUT api/<DogController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
