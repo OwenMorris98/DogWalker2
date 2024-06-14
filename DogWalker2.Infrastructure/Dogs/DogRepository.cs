@@ -10,6 +10,8 @@ using DogWalker2.Data;
 //using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using DogWalker2.Domain;
+using DogWalker2.Domain.Walks;
+
 
 namespace DogWalker2.Infrastructure.Dogs
 {
@@ -97,6 +99,21 @@ namespace DogWalker2.Infrastructure.Dogs
             }
         }
 
-        
+        public async Task<Walker> GetWalkerById(int id)
+        {
+            var walker = await _context.Walkers.FindAsync(id);
+            return walker;
+        }
+
+        public async Task<Location> GetWalkLocation(int id)
+        {
+            var location = await _context.Locations.FindAsync(id);
+            return location;
+        }
+
+        public void AddWalk(Walk walk)
+        {
+            _context.Walks.Add(walk);
+        }
     }
 }

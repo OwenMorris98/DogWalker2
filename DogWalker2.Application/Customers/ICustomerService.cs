@@ -9,6 +9,9 @@ using DogWalker2.Application.Customers.Commands.CreateCommands;
 using DogWalker2.Domain;
 using DogWalker2.Application.Customers.Commands.UpdateCommands;
 using DogWalker2.Application.Customers.Queries.GetAllCustomerDataById;
+using DogWalker2.Application.Dogs.DTOs;
+using DogWalker2.Application.Walks.DTOs;
+using DogWalker2.Application.Walks.Commands;
 
 namespace DogWalker2.Application.Customers
 {
@@ -27,6 +30,8 @@ namespace DogWalker2.Application.Customers
         Task<CustomerDTO> GetCustomerById(string id);
 
         Task<CustomerDogsDTO> GetAllCustomerDataById(string id);
+
+        Task<WalkDTO> ScheduleWalk(ScheduleWalkCommand command);
 
 
     }

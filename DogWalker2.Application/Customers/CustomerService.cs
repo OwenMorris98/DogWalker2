@@ -10,8 +10,12 @@ using DogWalker2.Application.Customers.Commands.CreateCommands;
 using DogWalker2.Application.Customers.Commands.UpdateCommands;
 using DogWalker2.Application.Customers.DTOs;
 using DogWalker2.Application.Customers.Queries.GetAllCustomerDataById;
+using DogWalker2.Application.Dogs.DTOs;
 using DogWalker2.Application.Mapperly;
+using DogWalker2.Application.Walks.Commands;
+using DogWalker2.Application.Walks.DTOs;
 using DogWalker2.Domain;
+using DogWalker2.Domain.Walks;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Update;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -21,12 +25,15 @@ namespace DogWalker2.Application.Customers
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IDogRepository _dogRepository;
         
         private CustomerMapper mapper = new CustomerMapper();
+        private WalkMapper walkMapper = new WalkMapper();
 
-        public CustomerService(ICustomerRepository customerRepository) 
+        public CustomerService(ICustomerRepository customerRepository, IDogRepository dogRepository) 
        {
          _customerRepository = customerRepository;
+         _dogRepository = dogRepository;
        }
 
         public void addCustomer(string id)
@@ -101,6 +108,38 @@ namespace DogWalker2.Application.Customers
 
             var customerDTO = mapper.CustomerToCustomerDogsDTO(customerEntity);
             return customerDTO;
+        }
+
+        public async Task<WalkDTO> ScheduleWalk(ScheduleWalkCommand command)
+        {
+            var walker = new Walker();           
+            
+            if(command.request.WalkerID is not null)
+            {
+                 walker = await _dogRepository.GetWalkerById(command.request.WalkerID.Value);
+            }   
+            var dog = await _dogRepository.GetDogById(command.request.DogID);
+
+            var walkLocation = await _dogRepository.GetWalkLocation(command.request.LocationID);
+
+            var walk = new WalkDTO()
+            {
+                Dog = dog,
+                Walker = walker,
+                ScheduledTime = command.request.ScheduledTime,
+                Duration = command.request.Duration,
+                Location = walkLocation,
+                Status = command.request.Status,
+                Notes = command.request.Notes
+            };
+
+            var walkEntity = walkMapper.WalkDTOtoWalk(walk);
+       
+
+            _dogRepository.AddWalk(walkEntity);
+
+
+            return walk;
         }
     }
 }

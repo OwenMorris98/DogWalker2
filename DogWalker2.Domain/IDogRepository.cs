@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DogWalker2.Domain.Walks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,12 @@ namespace DogWalker2.Domain
         bool UpdateDog(Dog dog);
         Task<Dog> GetDogById(string id);
         Task<IEnumerable<Dog>> GetDogsByCustomerId(string customerId);
+
+        Task<Walker> GetWalkerById(int id);
+
+        Task<Location> GetWalkLocation(int id);
+
+        void AddWalk(Walk walk);
 
 
 

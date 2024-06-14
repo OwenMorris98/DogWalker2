@@ -26,11 +26,15 @@ namespace DogWalker2.Domain
 
         public string? zipcode { get; set; }
 
-        public ICollection<Dog> Dogs { get; set; } = new List<Dog>();
+       // public IEnumerable<Dog> _dogs { get => Dogs.AsEnumerable(); set => Dogs = value.ToList(); }
+
+        public List<Dog> Dogs { get; set; } 
+
+        //public IEnumerable<Payment> _payments => Payments;
 
         public List<Payment> Payments { get; set; }
 
-        public Customer(string id, string? first_name, string? last_name, string? address, string? city, string? state, string? zipcode, ICollection<Dog> dogs, List<Payment> payments)
+        public Customer(string id, string? first_name, string? last_name, string? address, string? city, string? state, string? zipcode)
         {
             Id = id;
             this.first_name = first_name;
@@ -39,8 +43,7 @@ namespace DogWalker2.Domain
             this.city = city;
             this.state = state;
             this.zipcode = zipcode;
-            Dogs = dogs;
-            Payments = payments;
+          
         }
 
         public Customer()
@@ -56,6 +59,8 @@ namespace DogWalker2.Domain
         {
             Payments.Add(payment);
         }
+
+       
 
 
     }

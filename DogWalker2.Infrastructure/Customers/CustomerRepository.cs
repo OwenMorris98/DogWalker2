@@ -15,14 +15,14 @@ namespace DogWalker2.Infrastructure.Customers
     {
 
         private readonly IApplicationDbContext _context;
-        public CustomerRepository(IApplicationDbContext context) 
+        public CustomerRepository(IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public void addCustomer(Customer customer) =>     
+        public void addCustomer(Customer customer) =>
             _context.Customers.Add(customer);
-        
+
 
         public void addCustomerData(Customer customer)
             => _context.Customers.Add(customer);
@@ -34,8 +34,7 @@ namespace DogWalker2.Infrastructure.Customers
 
         public async Task<ICollection<Customer>> GetAll()
         {
-            return await _context.Customers.Include(c => c.Dogs).ToListAsync(); 
-
+            return await _context.Customers.Include(c => c.Dogs).ToListAsync();
         }
 
         public async Task<Customer?> GetAllCustomerDataById(string id)
@@ -49,16 +48,16 @@ namespace DogWalker2.Infrastructure.Customers
 
         public async Task<Customer?> GetCustomerById(string id)
         {
-            
-               var customer  = await _context.Customers
-                    .Include(d => d.Dogs)
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(c => c.Id == id);
+
+            var customer = await _context.Customers
+                 .Include(d => d.Dogs)
+                 .AsNoTracking()
+                 .FirstOrDefaultAsync(c => c.Id == id);
 
             return customer != null ? customer : null;
-            
-        } 
-            
+
+        }
+
 
         public void UpdateCustomer(Customer customer)
         {

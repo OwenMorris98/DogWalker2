@@ -18,10 +18,14 @@ namespace DogWalker2.Domain.Walks
         public int Duration { get; set; }
         public Location? Location { get; set; }
 
+        //public decimal price { get; set; }
+
         public string Status { get; set; }
         public string Notes { get; set; }
 
-        public ICollection<Payment> Payments { get; set; }
+        public List<Payment> WalkPayments { get; set; }
+
+        //public IEnumerable<Payment> _walkPayments => WalkPayments;
         public Walk(int walkID, Dog dog, Walker walker, DateTime scheduledTime, int duration, Location? location, string status, string notes)
         {
             WalkID = walkID;
@@ -35,6 +39,8 @@ namespace DogWalker2.Domain.Walks
         }
 
         public Walk() { }
+
+
     }
 
 }
