@@ -1,4 +1,4 @@
-﻿using DogWalker2.Application.Dogs.DTOs;
+﻿using DogWalker2.Application.DTOs.Dogs;
 using DogWalker2.Domain;
 using Riok.Mapperly.Abstractions;
 using System;

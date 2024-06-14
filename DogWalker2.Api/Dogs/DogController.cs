@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DogWalker2.Api.Customers;
-using DogWalker2.Application.Customers.DTOs;
-using DogWalker2.Application.Customers;
+using DogWalker2.Application.DTOs.Customers;
+using DogWalker2.Application;
 using System.Drawing.Printing;
 using MediatR;
-using DogWalker2.Application.Customers.Commands.CreateCommands;
+using DogWalker2.Application.Commands.Customers.CreateCommands;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using DogWalker2.Application.Dogs.Commands.CreateCommands;
-using DogWalker2.Application.Dogs.DTOs;
+using DogWalker2.Application.Commands.Dogs.CreateCommands;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using DogWalker2.Application.DTOs.Dogs;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace DogWalker2.Api.Dogs

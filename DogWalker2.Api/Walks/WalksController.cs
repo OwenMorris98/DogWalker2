@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using DogWalker2.Application.Walks.DTOs;
 using DogWalker2.Domain.Walks;
 using Microsoft.EntityFrameworkCore;
-using DogWalker2.Application.Walks.Commands;
+using DogWalker2.Application.Commands.Walks;
+using DogWalker2.Application.DTOs.Walks;
 
 namespace DogWalker2.Api.Walks
 {

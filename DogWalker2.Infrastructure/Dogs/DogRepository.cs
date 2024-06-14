@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using DogWalker2.Application.Data;
-using DogWalker2.Application.Dogs;
 using DogWalker2.Data;
 //using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;

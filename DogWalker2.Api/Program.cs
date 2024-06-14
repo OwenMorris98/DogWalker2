@@ -1,5 +1,3 @@
-using DogWalker2.Application.Customers;
-using DogWalker2.Application.Dogs;
 using DogWalker2.Infrastructure.Customers;
 using DogWalker2.Infrastructure.Dogs;
 using DogWalker2.Infrastructure.Services;
@@ -11,6 +9,8 @@ using Microsoft.Identity.Web;
 using DogWalker2.Infrastructure;
 using DogWalker.Infrastructure;
 using DogWalker2.Domain;
+using DogWalker2.Application.Services.Customers;
+using DogWalker2.Application.Services.Dogs;
 
 var builder = WebApplication.CreateBuilder(args);
 
