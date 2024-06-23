@@ -7,7 +7,7 @@ using DogWalker2.Domain.Walks;
 
 namespace DogWalker2.Infrastructure.Data
 {
-    public class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
         
     {
 

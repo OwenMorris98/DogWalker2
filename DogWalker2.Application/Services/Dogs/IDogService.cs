@@ -15,7 +15,7 @@ namespace DogWalker2.Application.Services.Dogs
 
         Task<Dog> GetDogById(string id);
 
-        Task<IEnumerable<Dog>> GetDogsByCustomerId(string customerId);
+        Task<IEnumerable<DogDTO>> GetDogsByCustomerId(string customerId);
 
         Task<DogDTO> AddDogAsync(CreateDogCommand dog);
         bool AddDog(Dog dog);

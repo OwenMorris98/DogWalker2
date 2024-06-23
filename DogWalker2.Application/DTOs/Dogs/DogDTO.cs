@@ -10,6 +10,8 @@ namespace DogWalker2.Application.DTOs.Dogs
 {
     public class DogDTO
     {
+
+        public string Id { get; set; }
         public string Name { get; set; }
 
         public string Breed { get; set; }

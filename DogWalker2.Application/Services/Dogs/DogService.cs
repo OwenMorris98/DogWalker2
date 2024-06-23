@@ -51,9 +51,11 @@ namespace DogWalker2.Application.Services.Dogs
             return await _dogRepository.GetDogs();
         }
 
-        public async Task<IEnumerable<Dog>> GetDogsByCustomerId(string customerId)
+        public async Task<IEnumerable<DogDTO>> GetDogsByCustomerId(string customerId)
         {
-            return await _dogRepository.GetDogsByCustomerId(customerId);
+            var dogs = await _dogRepository.GetDogsByCustomerId(customerId);
+            return _mapper.DogsToDogDTOs(dogs);
+           
         }
 
         public bool RemoveDog(Dog dog)
