@@ -15,7 +15,7 @@ namespace DogWalker2.Application.DTOs.Walks
         public int? WalkerID { get; set; }
         public DateTime ScheduledTime { get; set; }
         public int Duration { get; set; }
-        public int LocationID { get; set; }
+        public string Address { get; set; }
 
         public string Status { get; set; }
         public string Notes { get; set; }

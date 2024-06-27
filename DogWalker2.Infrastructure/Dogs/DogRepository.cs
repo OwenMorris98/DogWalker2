@@ -110,6 +110,19 @@ namespace DogWalker2.Infrastructure.Dogs
             return location;
         }
 
+        public async Task<Location>? IsLocation(string address)
+        {
+            var loc = await _context.Locations.FirstOrDefaultAsync(l => l.Address == address);
+            return loc;
+        }
+
+        public async Task<Location> AddLocation(Location location)
+        {
+            _context.Locations.Add(location);
+            await _context.SaveChangesAsync();
+            return location;
+        }
+
         public void AddWalk(Walk walk)
         {
             _context.Walks.Add(walk);

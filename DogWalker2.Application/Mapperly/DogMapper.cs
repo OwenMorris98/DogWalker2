@@ -16,6 +16,6 @@ namespace DogWalker2.Application.Mapperly
 
         public partial Dog DogDTOtoDog(DogDTO dog);
 
-        public partial IEnumerable<DogDTO> DogsToDogDTOs(IEnumerable<Dog> dogs);
+        public partial GetDogsByCustomerIdResponse DogsToDogDTOs(IEnumerable<Dog> dogs);
     }
 }

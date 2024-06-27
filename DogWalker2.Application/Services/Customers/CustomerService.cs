@@ -120,18 +120,36 @@ namespace DogWalker2.Application.Services.Customers
             }
             var dog = await _dogRepository.GetDogById(command.request.DogID);
 
-            var walkLocation = await _dogRepository.GetWalkLocation(command.request.LocationID);
-
             var walk = new WalkDTO()
             {
                 Dog = dog,
                 Walker = walker,
                 ScheduledTime = command.request.ScheduledTime,
                 Duration = command.request.Duration,
-                Location = walkLocation,
                 Status = command.request.Status,
                 Notes = command.request.Notes
             };
+
+            var locationExists = await _dogRepository.IsLocation(command.request.Address);
+            Location location;
+            if (locationExists is not null)
+            {
+                walk.Location = locationExists;
+
+            }
+            else
+            {
+
+               
+               walk.Location = await _dogRepository.AddLocation(new Location()
+                {
+                    Address = command.request.Address
+                });
+                
+                
+            }
+            // Set the LocationId for the walk entity
+           
 
             var walkEntity = walkMapper.WalkDTOtoWalk(walk);
 

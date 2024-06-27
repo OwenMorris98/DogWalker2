@@ -11,7 +11,7 @@ using DogWalker2.Application.Mapperly;
 
 namespace DogWalker2.Application.Queries.Dogs.GetDogsByCustomerId
 {
-    public class GetDogsByCustomerIdHandler : IRequestHandler<GetDogsByCustomerIdQuery, IEnumerable<DogDTO>>
+    public class GetDogsByCustomerIdHandler : IRequestHandler<GetDogsByCustomerIdQuery, GetDogsByCustomerIdResponse>
     {
         private readonly IDogService _dogService;
         
@@ -21,7 +21,7 @@ namespace DogWalker2.Application.Queries.Dogs.GetDogsByCustomerId
             _dogService = dogService;
         }
 
-        public Task<IEnumerable<DogDTO>> Handle(GetDogsByCustomerIdQuery request, CancellationToken cancellationToken)
+        public Task<GetDogsByCustomerIdResponse> Handle(GetDogsByCustomerIdQuery request, CancellationToken cancellationToken)
         {
             var dogs = _dogService.GetDogsByCustomerId(request.customerId);
             return dogs;

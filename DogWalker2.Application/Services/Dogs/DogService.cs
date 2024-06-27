@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using DogWalker2.Application.Commands.Dogs.CreateCommands;
+﻿using DogWalker2.Application.Commands.Dogs.CreateCommands;
 using DogWalker2.Application.DTOs.Dogs;
 using DogWalker2.Application.Mapperly;
 using DogWalker2.Domain;
@@ -51,10 +45,16 @@ namespace DogWalker2.Application.Services.Dogs
             return await _dogRepository.GetDogs();
         }
 
-        public async Task<IEnumerable<DogDTO>> GetDogsByCustomerId(string customerId)
+        public async Task<GetDogsByCustomerIdResponse> GetDogsByCustomerId(string customerId)
         {
             var dogs = await _dogRepository.GetDogsByCustomerId(customerId);
-            return _mapper.DogsToDogDTOs(dogs);
+            GetDogsByCustomerIdResponse response = new GetDogsByCustomerIdResponse();
+            foreach (var dog in dogs)
+            {
+                var dogDTO = _mapper.DogToDogDTO(dog);
+                response.Dogs.Add(dogDTO);
+            }
+            return response;
            
         }
 

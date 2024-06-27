@@ -8,6 +8,6 @@ using MediatR;
 
 namespace DogWalker2.Application.Queries.Dogs.GetDogsByCustomerId
 {
-    public record GetDogsByCustomerIdQuery(string customerId) : IRequest<IEnumerable<DogDTO>>;
+    public record GetDogsByCustomerIdQuery(string customerId) : IRequest<GetDogsByCustomerIdResponse>;
 
 }
