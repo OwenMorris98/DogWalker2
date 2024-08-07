@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using DogWalker2.Application.Queries.Customers.GetById;
 using DogWalker2.Application.Queries.Customers.GetAllCustomerDataById;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,7 +31,7 @@ namespace DogWalker2.Api.Customers
 
 
         // GET: api/<CustomerController>
-        [HttpGet]
+        [HttpGet]     
         public async Task<IActionResult> Get()
         {
             var query = new GetCustomerQuery();
@@ -82,21 +83,21 @@ namespace DogWalker2.Api.Customers
 
         }
         // POST api/<CustomerController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CustomerDTO customer)
-        {
-            // var request = new CreateCustomerCommand(customer);
-            try
-            {
-                var command = new CreateCustomerCommand(customer);
-                var response = await _mediator.Send(command);
-                return Ok(response);
-            }
-            catch
-            {
-                throw new NotImplementedException();
-            }
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Post([FromBody] CustomerDTO customer)
+        //{
+        //    // var request = new CreateCustomerCommand(customer);
+        //    try
+        //    {
+        //        var command = new CreateCustomerCommand(customer);
+        //        var response = await _mediator.Send(command);
+        //        return Ok(response);
+        //    }
+        //    catch
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
 
         // PUT api/<CustomerController>/5
         [HttpPut("{id}")]

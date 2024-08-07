@@ -42,13 +42,13 @@ namespace DogWalker2.Application.Services.Customers
             _customerRepository.addCustomer(cust);
         }
 
-        public async Task<CustomerDTO> addCustomerData(CreateCustomerCommand command)
-        {
-            var customer = mapper.CustomerDTOtoCustomer(command.customer);
-            customer.Id = Guid.NewGuid().ToString();
-            _customerRepository.addCustomerData(customer);
-            return command.customer;
-        }
+        //public async Task<CustomerDTO> addCustomerData(CreateCustomerCommand command)
+        //{
+        //    var customer = mapper.CustomerDTOtoCustomer(command.customer);
+        //    customer.Id = Guid.NewGuid().ToString();
+        //    _customerRepository.addCustomerData(customer);
+        //    return command.customer;
+        //}
 
         public async Task deleteCustomer(string id)
         {
@@ -85,8 +85,7 @@ namespace DogWalker2.Application.Services.Customers
 
             if (customer != null)
             {
-                var customerEntity = mapper.CustomerDTOtoCustomer(command.customerToUpdate);
-                customerEntity.Id = command.id;
+                var customerEntity = mapper.CustomerDTOtoCustomer(command.customerToUpdate);               
                 _customerRepository.UpdateCustomer(customerEntity);
                 return command.customerToUpdate;
             }
@@ -110,54 +109,55 @@ namespace DogWalker2.Application.Services.Customers
             return customerDTO;
         }
 
-        public async Task<WalkDTO> ScheduleWalk(ScheduleWalkCommand command)
-        {
-            var walker = new Walker();
+        //public async Task<WalkDTO> ScheduleWalk(ScheduleWalkCommand command)
+        //{
+        //    var walker = new Walker();
 
-            if (command.request.WalkerID is not null)
-            {
-                walker = await _dogRepository.GetWalkerById(command.request.WalkerID.Value);
-            }
-            var dog = await _dogRepository.GetDogById(command.request.DogID);
+        //    if (command.request.WalkerID is not null)
+        //    {
+        //        walker = await _dogRepository.GetWalkerById(command.request.WalkerID.Value);
+        //    }
+        //    var dog = await _dogRepository.GetDogById(command.request.DogID);
 
-            var walk = new WalkDTO()
-            {
-                Dog = dog,
-                Walker = walker,
-                ScheduledTime = command.request.ScheduledTime,
-                Duration = command.request.Duration,
-                Status = command.request.Status,
-                Notes = command.request.Notes
-            };
+        //    var walk = new WalkDTO()
+        //    {
+        //        Dog = dog,
+        //        Walker = walker,
+        //        ScheduledTime = command.request.ScheduledTime,
+        //        Duration = command.request.Duration,
+        //        Status = command.request.Status,
+        //        Notes = command.request.Notes
+        //    };
 
-            var locationExists = await _dogRepository.IsLocation(command.request.Address);
-            Location location;
-            if (locationExists is not null)
-            {
-                walk.Location = locationExists;
+        //    var locationExists = await _dogRepository.IsLocation(command.request.Address);
+        //    Location location;
+        //    if (locationExists is not null)
+        //    {
+        //        walk.Location = locationExists;
 
-            }
-            else
-            {
+        //    }
+        //    else
+        //    {
 
                
-               walk.Location = await _dogRepository.AddLocation(new Location()
-                {
-                    Address = command.request.Address
-                });
+        //       walk.Location = await _dogRepository.AddLocation(new Location()
+        //        {
+        //            Address = command.request.Address
+        //        });
                 
                 
-            }
-            // Set the LocationId for the walk entity
+        //    }
+        //    // Set the LocationId for the walk entity
            
 
-            var walkEntity = walkMapper.WalkDTOtoWalk(walk);
+        //    var walkEntity = walkMapper.WalkDTOtoWalk(walk);
 
 
-            _dogRepository.AddWalk(walkEntity);
+        //    _dogRepository.AddWalk(walkEntity);
+        //    walk.Id = walkEntity.WalkID;
 
 
-            return walk;
-        }
+        //    return walk;
+        //}
     }
 }

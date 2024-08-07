@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+using System.ComponentModel.DataAnnotations;
 namespace DogWalker2.Domain.Walks
 {
 
@@ -14,6 +15,8 @@ namespace DogWalker2.Domain.Walks
         public Customer Customer { get; set; }
         public Walker Walker { get; set; }
         public Walk? Walk { get; set; }
+
+       
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public string PaymentMethod { get; set; }

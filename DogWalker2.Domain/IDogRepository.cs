@@ -20,13 +20,13 @@ namespace DogWalker2.Domain
 
         Task<Walker> GetWalkerById(int id);
 
-        Task<Location> GetWalkLocation(int id);
+        //Task<Location> GetWalkLocation(int id);
 
-        public Task<Location>? IsLocation(string address);
+        //public Task<Location>? IsLocation(string address);
 
         void AddWalk(Walk walk);
 
-        public Task<Location> AddLocation(Location location);
+        //public Task<Location> AddLocation(Location location);
 
 
     }

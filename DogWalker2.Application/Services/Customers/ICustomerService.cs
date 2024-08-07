@@ -19,7 +19,7 @@ namespace DogWalker2.Application.Services.Customers
     {
         void addCustomer(string id);
 
-        Task<CustomerDTO> addCustomerData(CreateCustomerCommand command);
+        //Task<CustomerDTO> addCustomerData(CreateCustomerCommand command);
 
         Task<CustomerDTO> UpdateCustomer(UpdateCustomerCommand command);
 
@@ -31,7 +31,7 @@ namespace DogWalker2.Application.Services.Customers
 
         Task<CustomerDogsDTO> GetAllCustomerDataById(string id);
 
-        Task<WalkDTO> ScheduleWalk(ScheduleWalkCommand command);
+        //Task<WalkDTO> ScheduleWalk(ScheduleWalkCommand command);
 
 
     }

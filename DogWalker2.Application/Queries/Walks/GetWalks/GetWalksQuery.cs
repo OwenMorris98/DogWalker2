@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DogWalker2.Application.Commands.Walks
+namespace DogWalker2.Application.Queries.Walks.GetWalks
 {
-    public record ScheduleWalkCommand(ScheduleWalkRequest request) : IRequest<ScheduleWalkResponse>;
+    public record GetWalksQuery(string customerId) : IRequest<List<GetWalksResponseDTO>>;
 }

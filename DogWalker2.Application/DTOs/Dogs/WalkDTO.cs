@@ -10,7 +10,7 @@ namespace DogWalker2.Application.DTOs.Dogs
 {
     public class WalkDTO
     {
-
+        public int Id { get; set; }
         public Dog Dog { get; set; }
         public Walker Walker { get; set; }
         public DateTime ScheduledTime { get; set; }

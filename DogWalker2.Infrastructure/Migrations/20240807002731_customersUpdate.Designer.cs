@@ -4,6 +4,7 @@ using DogWalker2.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DogWalker2.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240807002731_customersUpdate")]
+    partial class customersUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,6 +119,29 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("DogWalker2.Domain.Walks.Location", b =>
+                {
+                    b.Property<int>("LocationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationID"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
+                    b.HasKey("LocationID");
+
+                    b.ToTable("Locations");
+                });
+
             modelBuilder.Entity("DogWalker2.Domain.Walks.Payment", b =>
                 {
                     b.Property<int>("PaymentID")
@@ -164,15 +190,14 @@ namespace DogWalker2.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalkID"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("DogId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LocationID")
                         .HasColumnType("int");
 
                     b.Property<string>("Notes")
@@ -192,6 +217,8 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.HasKey("WalkID");
 
                     b.HasIndex("DogId");
+
+                    b.HasIndex("LocationID");
 
                     b.HasIndex("WalkerID");
 
@@ -286,6 +313,10 @@ namespace DogWalker2.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DogWalker2.Domain.Walks.Location", "Location")
+                        .WithMany("Walks")
+                        .HasForeignKey("LocationID");
+
                     b.HasOne("DogWalker2.Domain.Walks.Walker", "Walker")
                         .WithMany("Walks")
                         .HasForeignKey("WalkerID")
@@ -293,6 +324,8 @@ namespace DogWalker2.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Dog");
+
+                    b.Navigation("Location");
 
                     b.Navigation("Walker");
                 });
@@ -305,6 +338,11 @@ namespace DogWalker2.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("DogWalker2.Domain.Dog", b =>
+                {
+                    b.Navigation("Walks");
+                });
+
+            modelBuilder.Entity("DogWalker2.Domain.Walks.Location", b =>
                 {
                     b.Navigation("Walks");
                 });
