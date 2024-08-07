@@ -1,4 +1,4 @@
-﻿using DogWalker2.Application.Dogs.DTOs;
+﻿using DogWalker2.Application.DTOs.Dogs;
 using DogWalker2.Domain;
 using Riok.Mapperly.Abstractions;
 using System;
@@ -15,5 +15,7 @@ namespace DogWalker2.Application.Mapperly
         public partial DogDTO DogToDogDTO(Dog dog);
 
         public partial Dog DogDTOtoDog(DogDTO dog);
+
+        public partial GetDogsByCustomerIdResponse DogsToDogDTOs(IEnumerable<Dog> dogs);
     }
 }

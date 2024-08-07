@@ -24,6 +24,13 @@ namespace DogWalker2.Domain.Walks
             Latitude = latitude;
             Longitude = longitude;
         }
+
+        public bool Exists(Location location)
+        {
+           return location != null;
+        }
+
+
     }
 
 }

@@ -14,15 +14,19 @@ namespace DogWalker2.Domain
         bool AddDog(Dog dog);
         bool RemoveDog(Dog dog);
         bool UpdateDog(Dog dog);
+
         Task<Dog> GetDogById(string id);
         Task<IEnumerable<Dog>> GetDogsByCustomerId(string customerId);
 
         Task<Walker> GetWalkerById(int id);
 
-        Task<Location> GetWalkLocation(int id);
+        //Task<Location> GetWalkLocation(int id);
+
+        //public Task<Location>? IsLocation(string address);
 
         void AddWalk(Walk walk);
 
+        //public Task<Location> AddLocation(Location location);
 
 
     }

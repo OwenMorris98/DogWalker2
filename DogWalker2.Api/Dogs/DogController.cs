@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DogWalker2.Api.Customers;
-using DogWalker2.Application.Customers.DTOs;
-using DogWalker2.Application.Customers;
+using DogWalker2.Application.DTOs.Customers;
+using DogWalker2.Application;
 using System.Drawing.Printing;
 using MediatR;
-using DogWalker2.Application.Customers.Commands.CreateCommands;
+using DogWalker2.Application.Commands.Customers.CreateCommands;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using DogWalker2.Application.Dogs.Commands.CreateCommands;
-using DogWalker2.Application.Dogs.DTOs;
+using DogWalker2.Application.Commands.Dogs.CreateCommands;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using DogWalker2.Application.DTOs.Dogs;
+using DogWalker2.Application.Queries.Customers.GetAllCustomers;
+using DogWalker2.Application.Queries.Dogs.GetDogsByCustomerId;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace DogWalker2.Api.Dogs
@@ -28,10 +30,27 @@ namespace DogWalker2.Api.Dogs
 
         // GET: api/<DogController>
         [HttpGet]
-        public IEnumerable<string> Get(string CustomerId)
+        public async Task<IActionResult> GetDogsByCustomerId(string CustomerId)
         {
-            
-            return new string[] { "value1", "value2" };
+            var query = new GetDogsByCustomerIdQuery(CustomerId);
+            try
+            {
+                var dogs = await _mediator.Send(query);
+                if (dogs != null)
+                {
+                    return Ok(dogs);
+                }
+                else
+                {
+
+                   return NotFound();
+                }
+            }    
+                
+            catch
+            {
+                return NotFound ();
+            }
         }
 
         // GET api/<DogController>/5

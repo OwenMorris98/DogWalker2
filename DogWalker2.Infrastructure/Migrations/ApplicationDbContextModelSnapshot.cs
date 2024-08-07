@@ -17,7 +17,7 @@ namespace DogWalker2.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -27,10 +27,8 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("city")
+                    b.Property<string>("email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("first_name")
@@ -39,10 +37,8 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.Property<string>("last_name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("state")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("zipcode")
+                    b.Property<string>("passwordHash")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -50,7 +46,7 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("DogWalker2.Domain.Dogs.Dog", b =>
+            modelBuilder.Entity("DogWalker2.Domain.Dog", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -80,30 +76,47 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.ToTable("Dogs");
                 });
 
-            modelBuilder.Entity("DogWalker2.Domain.Locations.Location", b =>
+            modelBuilder.Entity("DogWalker2.Domain.Users.Role", b =>
                 {
-                    b.Property<int>("LocationID")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
+                    b.HasKey("id");
 
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float");
-
-                    b.HasKey("LocationID");
-
-                    b.ToTable("Locations");
+                    b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("DogWalker2.Domain.Payments.Payment", b =>
+            modelBuilder.Entity("DogWalker2.Domain.Users.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Roleid")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Roleid");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DogWalker2.Domain.Walks.Payment", b =>
                 {
                     b.Property<int>("PaymentID")
                         .ValueGeneratedOnAdd()
@@ -112,6 +125,7 @@ namespace DogWalker2.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentID"));
 
                     b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CustomerId")
@@ -142,7 +156,49 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.ToTable("Payment");
                 });
 
-            modelBuilder.Entity("DogWalker2.Domain.Walkers.Walker", b =>
+            modelBuilder.Entity("DogWalker2.Domain.Walks.Walk", b =>
+                {
+                    b.Property<int>("WalkID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalkID"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DogId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ScheduledTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WalkerID")
+                        .HasColumnType("int");
+
+                    b.HasKey("WalkID");
+
+                    b.HasIndex("DogId");
+
+                    b.HasIndex("WalkerID");
+
+                    b.ToTable("Walks");
+                });
+
+            modelBuilder.Entity("DogWalker2.Domain.Walks.Walker", b =>
                 {
                     b.Property<int>("WalkerID")
                         .ValueGeneratedOnAdd()
@@ -175,50 +231,7 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.ToTable("Walkers");
                 });
 
-            modelBuilder.Entity("DogWalker2.Domain.Walks.Walk", b =>
-                {
-                    b.Property<int>("WalkID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalkID"));
-
-                    b.Property<string>("DogId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LocationID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ScheduledTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("WalkerID")
-                        .HasColumnType("int");
-
-                    b.HasKey("WalkID");
-
-                    b.HasIndex("DogId");
-
-                    b.HasIndex("LocationID");
-
-                    b.HasIndex("WalkerID");
-
-                    b.ToTable("Walks");
-                });
-
-            modelBuilder.Entity("DogWalker2.Domain.Dogs.Dog", b =>
+            modelBuilder.Entity("DogWalker2.Domain.Dog", b =>
                 {
                     b.HasOne("DogWalker2.Domain.Customer", "Customer")
                         .WithMany("Dogs")
@@ -229,7 +242,18 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("DogWalker2.Domain.Payments.Payment", b =>
+            modelBuilder.Entity("DogWalker2.Domain.Users.User", b =>
+                {
+                    b.HasOne("DogWalker2.Domain.Users.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("Roleid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("DogWalker2.Domain.Walks.Payment", b =>
                 {
                     b.HasOne("DogWalker2.Domain.Customer", "Customer")
                         .WithMany("Payments")
@@ -238,10 +262,10 @@ namespace DogWalker2.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("DogWalker2.Domain.Walks.Walk", "Walk")
-                        .WithMany("Payments")
+                        .WithMany("WalkPayments")
                         .HasForeignKey("WalkID");
 
-                    b.HasOne("DogWalker2.Domain.Walkers.Walker", "Walker")
+                    b.HasOne("DogWalker2.Domain.Walks.Walker", "Walker")
                         .WithMany("Payments")
                         .HasForeignKey("WalkerID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -256,25 +280,19 @@ namespace DogWalker2.Infrastructure.Migrations
 
             modelBuilder.Entity("DogWalker2.Domain.Walks.Walk", b =>
                 {
-                    b.HasOne("DogWalker2.Domain.Dogs.Dog", "Dog")
+                    b.HasOne("DogWalker2.Domain.Dog", "Dog")
                         .WithMany("Walks")
                         .HasForeignKey("DogId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DogWalker2.Domain.Locations.Location", "Location")
-                        .WithMany("Walks")
-                        .HasForeignKey("LocationID");
-
-                    b.HasOne("DogWalker2.Domain.Walkers.Walker", "Walker")
+                    b.HasOne("DogWalker2.Domain.Walks.Walker", "Walker")
                         .WithMany("Walks")
                         .HasForeignKey("WalkerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Dog");
-
-                    b.Navigation("Location");
 
                     b.Navigation("Walker");
                 });
@@ -286,26 +304,21 @@ namespace DogWalker2.Infrastructure.Migrations
                     b.Navigation("Payments");
                 });
 
-            modelBuilder.Entity("DogWalker2.Domain.Dogs.Dog", b =>
+            modelBuilder.Entity("DogWalker2.Domain.Dog", b =>
                 {
-                    b.Navigation("Walks");
-                });
-
-            modelBuilder.Entity("DogWalker2.Domain.Locations.Location", b =>
-                {
-                    b.Navigation("Walks");
-                });
-
-            modelBuilder.Entity("DogWalker2.Domain.Walkers.Walker", b =>
-                {
-                    b.Navigation("Payments");
-
                     b.Navigation("Walks");
                 });
 
             modelBuilder.Entity("DogWalker2.Domain.Walks.Walk", b =>
                 {
+                    b.Navigation("WalkPayments");
+                });
+
+            modelBuilder.Entity("DogWalker2.Domain.Walks.Walker", b =>
+                {
                     b.Navigation("Payments");
+
+                    b.Navigation("Walks");
                 });
 #pragma warning restore 612, 618
         }

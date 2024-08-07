@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DogWalker2.Application.Data;
-using DogWalker2.Application.Dogs;
+using DogWalker2.Application;
 using DogWalker2.Infrastructure;
 using DogWalker2.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

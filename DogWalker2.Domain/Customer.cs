@@ -7,24 +7,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DogWalker2.Domain.Walks;
+using DogWalker2.Domain.Users;
 
 namespace DogWalker2.Domain
 {
     public class Customer
     {
-        public string Id { get; set; }
+        public string Id { get; init; } = Guid.NewGuid().ToString();
+
+        public string email { get; set; }
+
+        public string passwordHash { get; set; }
 
         public string? first_name { get; set; }
 
         public string? last_name { get; set; }
 
-        public string? address { get; set; }
-
-        public string? city { get; set; }
-
-        public string? state { get; set; }
-
-        public string? zipcode { get; set; }
 
        // public IEnumerable<Dog> _dogs { get => Dogs.AsEnumerable(); set => Dogs = value.ToList(); }
 
@@ -34,16 +32,19 @@ namespace DogWalker2.Domain
 
         public List<Payment> Payments { get; set; }
 
-        public Customer(string id, string? first_name, string? last_name, string? address, string? city, string? state, string? zipcode)
+
+        public Customer(string id, string email, string passwordHash)
         {
             Id = id;
-            this.first_name = first_name;
-            this.last_name = last_name;
-            this.address = address;
-            this.city = city;
-            this.state = state;
-            this.zipcode = zipcode;
+            this.email = email;
+            this.passwordHash = passwordHash;
+        
           
+        }
+
+        public Customer Create(string email, string passwordHash)
+        {
+            return new Customer(Guid.NewGuid().ToString(), email, passwordHash);
         }
 
         public Customer()

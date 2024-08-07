@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using DogWalker2.Application.Data;
-using DogWalker2.Application.Dogs;
 using DogWalker2.Data;
 //using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -105,11 +104,24 @@ namespace DogWalker2.Infrastructure.Dogs
             return walker;
         }
 
-        public async Task<Location> GetWalkLocation(int id)
-        {
-            var location = await _context.Locations.FindAsync(id);
-            return location;
-        }
+        //public async Task<Location> GetWalkLocation(int id)
+        //{
+        //    var location = await _context.Locations.FindAsync(id);
+        //    return location;
+        //}
+
+        //public async Task<Location>? IsLocation(string address)
+        //{
+        //    var loc = await _context.Locations.FirstOrDefaultAsync(l => l.Address == address);
+        //    return loc;
+        //}
+
+        //public async Task<Location> AddLocation(Location location)
+        //{
+        //    _context.Locations.Add(location);
+        //    await _context.SaveChangesAsync();
+        //    return location;
+        //}
 
         public void AddWalk(Walk walk)
         {
