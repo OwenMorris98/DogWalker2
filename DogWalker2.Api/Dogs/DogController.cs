@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using DogWalker2.Application.DTOs.Dogs;
 using DogWalker2.Application.Queries.Customers.GetAllCustomers;
 using DogWalker2.Application.Queries.Dogs.GetDogsByCustomerId;
+using Microsoft.AspNetCore.Authorization;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace DogWalker2.Api.Dogs
@@ -62,9 +63,10 @@ namespace DogWalker2.Api.Dogs
 
         // POST api/<DogController>
         [HttpPost]
-        public async Task<IActionResult> Post(string CustomerId, [FromBody] DogDTO dog)
+        [Authorize]
+        public async Task<IActionResult> Post(string CustomerId, [FromBody] PostDogRequest dog)
         {
-            dog.customer_id = CustomerId;
+            
             var request = new CreateDogCommand(dog);
             try
             {

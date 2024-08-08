@@ -36,7 +36,7 @@ namespace DogWalker2.Api.Customers
         {
             var command = new CreateCustomerCommand(request.email, request.password);
             var response = await _mediator.Send(command, cancellationToken);
-            return CreatedAtAction(nameof(Register), response.email);
+            return Ok(new { email = response.email });
         }
 
         [HttpGet]
