@@ -17,18 +17,18 @@ namespace DogWalker2.Application.Services.Dogs
             _mapper = new DogMapper();
         }
 
-        public async Task<DogDTO> AddDogAsync(CreateDogCommand command)
-        {
-            var dogToAdd = _mapper.DogDTOtoDog(command.dog);
-            dogToAdd.Id = Guid.NewGuid().ToString();
-            var response = await _dogRepository.AddDogAsync(dogToAdd);
+        //public async Task<DogDTO> AddDogAsync(CreateDogCommand command)
+        //{
+        //    var dogToAdd = _mapper.DogDTOtoDog(command.dog);
+        //    dogToAdd.Id = Guid.NewGuid().ToString();
+        //    var response = await _dogRepository.AddDogAsync(dogToAdd);
 
-            if (response)
-            {
-                return command.dog;
-            }
-            return new DogDTO();
-        }
+        //    if (response)
+        //    {
+        //        return command.dog;
+        //    }
+        //    return new DogDTO();
+        //}
 
         public bool AddDog(Dog dog)
         {

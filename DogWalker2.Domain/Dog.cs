@@ -12,7 +12,7 @@ namespace DogWalker2.Domain
     public class Dog
     {
         [Key]
-        public string Id { get; set; }
+        public string Id { get; init; } = Guid.NewGuid().ToString();
 
         public string Name { get; set; }
 
@@ -28,6 +28,20 @@ namespace DogWalker2.Domain
         public Customer Customer { get; set; }
 
         public ICollection<Walk> Walks { get; set; }
+
+        public Dog() { }
+
+        public Dog Create(string name, string breed, int age, string? notes, string custoemrId)
+        {
+
+            Name = name;
+            Breed = breed;
+            Age = age;
+            Notes = notes;
+            this.customer_id = custoemrId;
+            return this;
+            
+        }
 
     }
 }

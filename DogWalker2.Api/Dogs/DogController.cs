@@ -67,10 +67,23 @@ namespace DogWalker2.Api.Dogs
         public async Task<IActionResult> Post(string CustomerId, [FromBody] PostDogRequest dog)
         {
             
-            var request = new CreateDogCommand(dog);
+            var request = new CreateDogCommand(
+               CustomerId,
+               dog.name,
+               dog.breed,
+               dog.age,
+               dog.notes);
             try
             {
-                var response = await _mediator.Send(request);
+                var result = await _mediator.Send(request);
+
+                var response = new PostDogResponse(
+                    result.id,
+                    result.name,
+                    result.breed,
+                    result.age,
+                    result?.notes);
+
                 return Ok(response);
             }
             catch

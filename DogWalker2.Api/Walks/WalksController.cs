@@ -8,6 +8,7 @@ using DogWalker2.Application.Queries.Walks;
 using DogWalker2.Application.Queries.Walks.GetWalks;
 using DogWalker2.Application.Queries.Walks.GetWalksById;
 using DogWalker2.Application.DTOs.Walks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DogWalker2.Api.Walks
 {
@@ -39,11 +40,12 @@ namespace DogWalker2.Api.Walks
 
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Walks(ScheduleWalkRequest request)
         {
             var command = new ScheduleWalkCommand(request);
             var walkToSchedule = await _mediator.Send(command);
-            return CreatedAtAction(nameof(Walks),new {walkToSchedule.id});
+            return CreatedAtAction(nameof(Walks), walkToSchedule);
         }
     }
 }
