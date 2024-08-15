@@ -9,6 +9,7 @@ using DogWalker2.Application.Queries.Walks.GetWalks;
 using DogWalker2.Application.Queries.Walks.GetWalksById;
 using DogWalker2.Application.DTOs.Walks;
 using Microsoft.AspNetCore.Authorization;
+using DogWalker2.Application.Queries.Walks.GetPendingWalks;
 
 namespace DogWalker2.Api.Walks
 {
@@ -47,5 +48,16 @@ namespace DogWalker2.Api.Walks
             var walkToSchedule = await _mediator.Send(command);
             return CreatedAtAction(nameof(Walks), walkToSchedule);
         }
+
+        [HttpGet]
+        //[Authorize]
+        [Route("Pending")]
+        public async Task<IActionResult> Pending([FromRoute] string customerId)
+        {
+
+           var walks = await _mediator.Send(new GetPendingWalksQuery(customerId));         
+            return Ok(walks);
+        }}
     }
-}
+
+

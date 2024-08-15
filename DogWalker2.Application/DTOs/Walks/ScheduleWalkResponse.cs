@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace DogWalker2.Application.DTOs.Walks
 {
-    public record ScheduleWalkResponse(int id, Dog dog, string address, DateTime time, int duration, string notes );
+    public record ScheduleWalkResponse(int id, ScheduleWalkDog dog, string address, DateTime time, int duration, string notes );
+
+    public record ScheduleWalkDog(string id, string name, string breed, int age, string? notes);
     
 }

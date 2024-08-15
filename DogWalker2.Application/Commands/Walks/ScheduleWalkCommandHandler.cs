@@ -55,8 +55,8 @@ namespace DogWalker2.Application.Commands.Walks
             _dogRepository.AddWalk(walk);           
             await _unitOfWork.SaveAsync();
 
-
-            ScheduleWalkResponse response = new ScheduleWalkResponse(walk.WalkID, walk.Dog, walk.Address, walk.ScheduledTime, walk.Duration, walk.Notes);
+            var dogResponse = new ScheduleWalkDog(dog.Id, dog.Name, dog.Breed, dog.Age, dog.Notes);
+            ScheduleWalkResponse response = new ScheduleWalkResponse(walk.WalkID, dogResponse, walk.Address, walk.ScheduledTime, walk.Duration, walk.Notes);
 
             return response;
         }
