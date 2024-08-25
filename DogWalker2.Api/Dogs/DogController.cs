@@ -31,6 +31,7 @@ namespace DogWalker2.Api.Dogs
 
         // GET: api/<DogController>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetDogsByCustomerId(string CustomerId)
         {
             var query = new GetDogsByCustomerIdQuery(CustomerId);

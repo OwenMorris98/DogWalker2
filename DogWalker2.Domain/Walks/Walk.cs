@@ -20,7 +20,7 @@ namespace DogWalker2.Domain.Walks
 
         //public decimal price { get; set; }
 
-        public string Status { get; set; }
+        public string Status { get; init; } = "Pending";
         public string Notes { get; set; }
 
         public List<Payment> WalkPayments { get; set; }
@@ -40,7 +40,36 @@ namespace DogWalker2.Domain.Walks
 
         public Walk() { }
 
-      
+
+        public string flipStatus(string status)
+        {
+            if (String.IsNullOrEmpty(status))
+            {
+                throw new Exception("status is null");
+            }
+
+            if(status.Equals("Pending"))
+            {
+                return "Completed";
+            }
+            else if (status.Equals("Completed"))
+            {
+                return "Pending";
+            }
+            else
+            {
+                throw new Exception("status is not Pending or Completed");
+            }
+        }
+
+        public int IncreaseDuration(int increase)
+        {
+            if (increase <= 0)
+            {
+                throw new Exception("duration is negative");
+            }
+            return this.Duration + increase;
+        }
     }
 
 }
