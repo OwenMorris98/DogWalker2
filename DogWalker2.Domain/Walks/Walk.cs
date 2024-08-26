@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+using DogWalker2.Domain.Services;
 
 namespace DogWalker2.Domain.Walks
 {
@@ -69,6 +70,11 @@ namespace DogWalker2.Domain.Walks
                 throw new Exception("duration is negative");
             }
             return this.Duration + increase;
+        }
+
+        public async Task SendScheduledEmail(IEmailSender<Customer> sender, Customer customer, Walk walk)
+        {
+           await sender.SendWalkScheduledAsync(customer, walk);
         }
     }
 

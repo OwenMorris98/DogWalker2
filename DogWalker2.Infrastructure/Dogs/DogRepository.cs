@@ -104,6 +104,12 @@ namespace DogWalker2.Infrastructure.Dogs
             return walker;
         }
 
+        public async Task<Customer> GetOwner(string id)
+        {
+            var owner = await _context.Customers.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return owner;
+        }
+
         //public async Task<Location> GetWalkLocation(int id)
         //{
         //    var location = await _context.Locations.FindAsync(id);

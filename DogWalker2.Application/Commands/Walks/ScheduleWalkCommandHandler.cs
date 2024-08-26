@@ -11,6 +11,7 @@ using DogWalker2.Infrastructure.UnitOfWork;
 using MediatR;
 using DogWalker2.Application.Mapperly;
 using DogWalker2.Application.DTOs.Walks;
+using DogWalker2.Domain.Services;
 
 namespace DogWalker2.Application.Commands.Walks
 {
@@ -20,11 +21,12 @@ namespace DogWalker2.Application.Commands.Walks
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDogRepository _dogRepository;
         private WalkMapper walkMapper = new WalkMapper();
-        public ScheduleWalkCommandHandler(IDogRepository dogRepository, IUnitOfWork unitOfWork)
+        private readonly IEmailSender<Customer> _emailSender;
+        public ScheduleWalkCommandHandler(IDogRepository dogRepository, IUnitOfWork unitOfWork, IEmailSender<Customer> sender)
         {
             _dogRepository = dogRepository;
             _unitOfWork = unitOfWork;
-           
+           _emailSender = sender;
         }
 
         public async Task<ScheduleWalkResponse> Handle(ScheduleWalkCommand command, CancellationToken cancellationToken)
@@ -36,6 +38,7 @@ namespace DogWalker2.Application.Commands.Walks
                 walker = await _dogRepository.GetWalkerById(command.request.WalkerID.Value);
             }
             var dog = await _dogRepository.GetDogById(command.request.DogID);
+            var customer = await _dogRepository.GetOwner(dog.customer_id);
 
             var walk = new Walk()
             {
@@ -54,6 +57,7 @@ namespace DogWalker2.Application.Commands.Walks
             //var walkEntity = walkMapper.WalkDTOtoWalk(walk);
             _dogRepository.AddWalk(walk);           
             await _unitOfWork.SaveAsync();
+            await walk.SendScheduledEmail(_emailSender, customer, walk);
 
             var dogResponse = new ScheduleWalkDog(dog.Id, dog.Name, dog.Breed, dog.Age, dog.Notes);
             ScheduleWalkResponse response = new ScheduleWalkResponse(walk.WalkID, dogResponse, walk.Address, walk.ScheduledTime, walk.Duration, walk.Notes);

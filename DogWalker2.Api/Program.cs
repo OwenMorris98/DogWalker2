@@ -16,6 +16,8 @@ using DogWalker2.Application.Services.Users;
 using DogWalker2.Infrastructure.Authentication;
 using DogWalker2.Domain.Repositories;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using DogWalker2.Data;
+using DogWalker2.Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +46,7 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddSingleton<IEmailSender<Customer>, EmailSender>();
 
 
 builder.Services.AddPersistence(builder.Configuration);
