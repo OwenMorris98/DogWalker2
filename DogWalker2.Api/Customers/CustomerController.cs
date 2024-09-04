@@ -49,6 +49,7 @@ namespace DogWalker2.Api.Customers
 
         // GET api/<CustomerController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(string id)
         {
             var query = new GetCustomerByIdQuery(id);
@@ -69,7 +70,7 @@ namespace DogWalker2.Api.Customers
         [HttpGet("GetDetails/{id}")]
         public async Task<IActionResult> GetDogsByCustomerId(string id)
         {
-            var query = new GetAllCustomerDataByIdQuery(id);
+            var query = new GetCustomerByIdQuery(id);
 
             try
             {
