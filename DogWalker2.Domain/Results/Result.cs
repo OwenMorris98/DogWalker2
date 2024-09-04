@@ -1,4 +1,4 @@
-﻿using DogWalker2.Domain.NewFolder;
+﻿using DogWalker2.Domain.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
