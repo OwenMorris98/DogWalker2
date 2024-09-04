@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using DogWalker2.Domain;
 using DogWalker2.Domain.Services;
 using DogWalker2.Domain.Walks;
+using DogWalker2.Domain.Results;
 
 
 namespace DogWalker2.Infrastructure.Services
@@ -31,13 +32,19 @@ namespace DogWalker2.Infrastructure.Services
 
         public AuthMessageSenderOptions Options { get; set; } = new();//Set with Secret Manager.
 
-        public async Task SendEmailAsync(string toEmail, string subject, string message)
+        public async Task<Result> SendEmailAsync(string toEmail, string subject, string message)
         {
             if (string.IsNullOrEmpty(Options.SendGridKey))
             {
                 throw new Exception("Null SendGridKey");
             }
+            if (Options.SendGridKey == null)
+            {
+                return Result.Failure(new("401", "Error getting API Key"));
+            }
             await Execute(Options.SendGridKey, subject, message, toEmail);
+
+            return Result.Success();
         }
 
         public async Task Execute(string apiKey, string subject, string message, string toEmail)

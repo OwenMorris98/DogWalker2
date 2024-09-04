@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DogWalker2.Application.Queries.Customers.GetById
 {
 
-    public record GetCustomerByIdQuery(string id) : IRequest<CustomerDTO>;
+    public record GetCustomerByIdQuery(string id) : IRequest<GetCustomerByIdResult>;
 
 
 }
