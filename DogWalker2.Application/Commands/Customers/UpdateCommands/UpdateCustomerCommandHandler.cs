@@ -8,25 +8,36 @@ using System.Text;
 using System.Threading.Tasks;
 using DogWalker2.Application.DTOs.Customers;
 using DogWalker2.Application.Services.Customers;
+using DogWalker2.Domain.Repositories;
 
 namespace DogWalker2.Application.Commands.Customers.UpdateCommands
 {
-    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, CustomerDTO>
+    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, UpdateCustomerResult>
     {
-        private readonly ICustomerService _customerService;
+        private readonly IRepository<Customer> _repo;
 
         private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateCustomerCommandHandler(ICustomerService customerService, IUnitOfWork unitOfWork)
+        public UpdateCustomerCommandHandler(IRepository<Customer> customerRepo, IUnitOfWork unitOfWork)
         {
-            _customerService = customerService;
+            _repo = customerRepo;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<CustomerDTO> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateCustomerResult> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var response = await _customerService.UpdateCustomer(request);
-            await _unitOfWork.SaveAsync();
+            var customerToEdit = await _repo.GetByStringId(request.id);
+
+            if (customerToEdit == null)
+            {
+                throw new Exception("Customer not found");
+            }
+            customerToEdit.first_name = request.firstName;
+            customerToEdit.last_name = request.lastName;
+
+            await _repo.SaveAsync();
+
+            var response = new UpdateCustomerResult(customerToEdit.Id, customerToEdit.first_name, customerToEdit.last_name);
 
             return response;
         }

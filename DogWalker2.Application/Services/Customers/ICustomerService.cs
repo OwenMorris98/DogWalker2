@@ -21,7 +21,7 @@ namespace DogWalker2.Application.Services.Customers
 
         //Task<CustomerDTO> addCustomerData(CreateCustomerCommand command);
 
-        Task<CustomerDTO> UpdateCustomer(UpdateCustomerCommand command);
+        //Task<CustomerDTO> UpdateCustomer(UpdateCustomerCommand command);
 
         Task deleteCustomer(string id);
 

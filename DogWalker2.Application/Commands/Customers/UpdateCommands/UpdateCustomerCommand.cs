@@ -9,6 +9,6 @@ using System.Threading.Tasks;
 namespace DogWalker2.Application.Commands.Customers.UpdateCommands
 {
 
-    public record UpdateCustomerCommand(string id, CustomerDTO customerToUpdate) : IRequest<CustomerDTO>;
+    public record UpdateCustomerCommand(string id, string firstName, string lastName) : IRequest<UpdateCustomerResult>;
 
 }

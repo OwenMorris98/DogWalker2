@@ -6,18 +6,5 @@ using System.Threading.Tasks;
 
 namespace DogWalker2.Application.DTOs.Customers
 {
-    public class UpdateCustomerDTO
-    {
-        public string? first_name { get; set; }
-
-        public string? last_name { get; set; }
-
-        public string? address { get; set; }
-
-        public string? city { get; set; }
-
-        public string? state { get; set; }
-
-        public string? zipcode { get; set; }
-    }
+   public record UpdateCustomerResult(string id, string firstName, string lastName);
 }

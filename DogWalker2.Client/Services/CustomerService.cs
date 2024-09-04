@@ -16,8 +16,8 @@ namespace DogWalker2.Client.Services
         public async Task<HttpResponseMessage> DeleteCustomerRequest(string customerId) =>
             await _httpClient.DeleteAsync($"https://localhost:7188/api/Customer/{customerId}");
 
-        public async Task<HttpResponseMessage> EditCustomerRequest(string customerId, Customer customer) =>
-                    await _httpClient.PutAsJsonAsync<Customer>($"https://localhost:7188/api/Customer/{customerId}", customer);
+        public async Task<HttpResponseMessage> EditCustomerRequest(string customerId, PutCustomerRequest customer) =>
+                    await _httpClient.PutAsJsonAsync<PutCustomerRequest>($"https://localhost:7188/api/Customer/{customerId}", customer);
          
         
 

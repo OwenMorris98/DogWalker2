@@ -79,19 +79,19 @@ namespace DogWalker2.Application.Services.Customers
             return customersDTO;
         }
 
-        public async Task<CustomerDTO> UpdateCustomer(UpdateCustomerCommand command)
-        {
-            var customer = await _customerRepository.GetCustomerById(command.id);
+        //public async Task<CustomerDTO> UpdateCustomer(UpdateCustomerCommand command)
+        //{
+        //    var customer = await _customerRepository.GetCustomerById(command.id);
 
-            if (customer != null)
-            {
-                var customerEntity = mapper.CustomerDTOtoCustomer(command.customerToUpdate);               
-                _customerRepository.UpdateCustomer(customerEntity);
-                return command.customerToUpdate;
-            }
-            return new CustomerDTO();
+        //    if (customer != null)
+        //    {
+        //        var customerEntity = mapper.CustomerDTOtoCustomer(command.customerToUpdate);               
+        //        _customerRepository.UpdateCustomer(customerEntity);
+        //        return command.customerToUpdate;
+        //    }
+        //    return new CustomerDTO();
 
-        }
+        //}
 
         public async Task<CustomerDTO> GetCustomerById(string id)
         {

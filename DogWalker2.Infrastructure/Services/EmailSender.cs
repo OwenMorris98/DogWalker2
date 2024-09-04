@@ -78,13 +78,13 @@ namespace DogWalker2.Infrastructure.Services
 
         public async Task SendWalkScheduledAsync(Customer user, Walk walk)
         {
-            await SendEmailAsync(user.email, "$@You scheduled a walk!", $"Thank you for scheduling your walk!" +
-                $" \n\n Details: " +
-                $"\nWalker: {walk.Walker.Name}" +
-                $"\nDate: {walk.ScheduledTime.Date}" +
-                $"\nTime: {walk.ScheduledTime.TimeOfDay}" +
-                $"\nAddress: {walk.Address}" +
-                $"\nDuration: {walk.Duration} minutes");
+            await SendEmailAsync(user.email, @$"You scheduled a walk!", @$"Thank you for scheduling your walk!
+                {Environment.NewLine}Details: 
+                {Environment.NewLine}Walker: {walk.Walker.Name}
+                {Environment.NewLine}Date: {walk.ScheduledTime.Date}
+                {Environment.NewLine}Time: {walk.ScheduledTime.TimeOfDay}
+                {Environment.NewLine}Address: {walk.Address}
+                {Environment.NewLine}Duration: {walk.Duration} minutes");
         }
     }
 }

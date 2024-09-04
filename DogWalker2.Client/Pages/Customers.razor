@@ -34,10 +34,8 @@ else
             <Columns>
                 <HxGridColumn HeaderText="First Name" ItemTextSelector="customer => customer.first_name" />
                 <HxGridColumn HeaderText="Last Name" ItemTextSelector="customer => customer.last_name" />
-                <HxGridColumn HeaderText="Address" ItemTextSelector="customer => customer.address" />
-                <HxGridColumn HeaderText="City" ItemTextSelector="customer => customer.city" />
-                <HxGridColumn HeaderText="State" ItemTextSelector="customer => customer.state" />
-                <HxGridColumn HeaderText="Zip" ItemTextSelector="customer => customer.zipcode" />
+                <HxGridColumn HeaderText="Last Name" ItemTextSelector="customer => customer.email" />
+                
                 
                     <HxContextMenuGridColumn Context="item">
                     
@@ -154,9 +152,9 @@ else
         editButton = false;
         if(customerToEdit is not null)
         {
-            //var response = await Http.PutAsJsonAsync<Customer>($"https://localhost:7188/api/Customer/{customerToEdit.id}", customerToEdit);
-            var response = await customerService.EditCustomerRequest(customerToEdit.id, customerToEdit);
-            if(!response.IsSuccessStatusCode)
+            var  request = new PutCustomerRequest(customerToEdit.first_name, customerToEdit.last_name);
+            var response = await customerService.EditCustomerRequest(customerToEdit.id, request);
+             if(!response.IsSuccessStatusCode)
             {
                 nav.NavigateTo("/customers", true);
             }

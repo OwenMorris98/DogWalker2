@@ -101,12 +101,12 @@ namespace DogWalker2.Api.Customers
 
         // PUT api/<CustomerController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, [FromBody] CustomerDTO customer)
+        public async Task<IActionResult> Put([FromRoute] string id, [FromBody] PutCustomerRequest request)
         {
-            var request = new UpdateCustomerCommand(id, customer);
+            var command = new UpdateCustomerCommand(id, request.firstName, request.lastName);
             try
             {
-                var response = await _mediator.Send(request);
+                var response = await _mediator.Send(command);
                 return Ok(response);
             }
             catch
